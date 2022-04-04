@@ -5,3 +5,8 @@
 h1 {
   color: purple;
 }
+
+button {
+  border: 3px solid #fff;
+  border-radius: 15px;
+}
