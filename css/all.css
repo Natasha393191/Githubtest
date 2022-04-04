@@ -10,3 +10,8 @@ button {
   border: 3px solid #fff;
   border-radius: 15px;
 }
+
+p {
+  color: orange;
+  background-color: #eee;
+}
