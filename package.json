@@ -1,0 +1,43 @@
+{
+  "name": "finance-quiz-app",
+  "version": "1.0.0",
+  "description": "理財抽考遊戲 - 一個幫助學習理財知識的手機應用程式",
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web"
+  },
+  "dependencies": {
+    "expo": "~50.0.0",
+    "react": "18.2.0",
+    "react-native": "0.73.0",
+    "@react-navigation/native": "^6.1.0",
+    "@react-navigation/bottom-tabs": "^6.5.0",
+    "@react-navigation/stack": "^6.3.0",
+    "react-native-screens": "~3.29.0",
+    "react-native-safe-area-context": "4.8.2",
+    "expo-sqlite": "~13.4.0",
+    "expo-status-bar": "~1.11.1",
+    "react-native-vector-icons": "^10.0.0",
+    "@expo/vector-icons": "^14.0.0",
+    "react-native-chart-kit": "^6.12.0",
+    "react-native-svg": "14.1.0",
+    "react-native-async-storage": "~1.21.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.0"
+  },
+  "private": true,
+  "keywords": [
+    "react-native",
+    "expo",
+    "finance",
+    "quiz",
+    "education",
+    "mobile-app"
+  ],
+  "author": "Your Name",
+  "license": "MIT"
+}
