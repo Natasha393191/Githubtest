@@ -7,9 +7,12 @@ import {
   Alert,
   Dimensions,
   ActivityIndicator,
+  ScrollView,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useGame } from '../context/GameContext';
+import { GAME_STATUS } from '../game/gameLogic';
 
 const { width } = Dimensions.get('window');
 
@@ -23,9 +26,10 @@ const theme = {
   textSecondary: '#708090',
   success: '#28a745',
   error: '#dc3545',
+  warning: '#ffc107',
 };
 
-// 示例題目數據（實際應用中會從資料庫讀取）
+// 示例題目數據（原有的理財知識題目）
 const sampleQuestions = [
   {
     id: 1,
@@ -65,13 +69,23 @@ const sampleQuestions = [
   }
 ];
 
-export default function QuizScreen() {
+export default function QuizScreen({ navigation }) {
+  const {
+    availability,
+    isGameAvailable,
+    currentGame,
+    getGameStatistics
+  } = useGame();
+
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [showResult, setShowResult] = useState(false);
   const [score, setScore] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [questions, setQuestions] = useState(sampleQuestions);
+  const [gameMode, setGameMode] = useState('practice'); // 'practice' or 'daily'
+
+  const gameStats = getGameStatistics();
 
   const handleAnswerSelect = (answerIndex) => {
     setSelectedAnswer(answerIndex);
@@ -123,105 +137,216 @@ export default function QuizScreen() {
     setScore(0);
   };
 
+  const handleDailyQuiz = () => {
+    navigation.navigate('DailyQuiz');
+  };
+
   const currentQ = questions[currentQuestion];
   const progress = ((currentQuestion + 1) / questions.length) * 100;
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* 進度條 */}
-      <View style={styles.progressContainer}>
-        <View style={styles.progressBar}>
-          <View style={[styles.progressFill, { width: `${progress}%` }]} />
-        </View>
-        <Text style={styles.progressText}>
-          {currentQuestion + 1} / {questions.length}
-        </Text>
-      </View>
-
-      {/* 題目區域 */}
-      <View style={styles.questionContainer}>
-        <Text style={styles.questionNumber}>第 {currentQuestion + 1} 題</Text>
-        <Text style={styles.questionText}>{currentQ.question}</Text>
-      </View>
-
-      {/* 選項區域 */}
-      <View style={styles.optionsContainer}>
-        {currentQ.options.map((option, index) => {
-          let optionStyle = [styles.optionButton];
-          let textStyle = [styles.optionText];
-
-          if (showResult) {
-            if (index === currentQ.correctAnswer) {
-              optionStyle.push(styles.correctOption);
-              textStyle.push(styles.correctOptionText);
-            } else if (index === selectedAnswer && selectedAnswer !== currentQ.correctAnswer) {
-              optionStyle.push(styles.wrongOption);
-              textStyle.push(styles.wrongOptionText);
-            }
-          } else if (selectedAnswer === index) {
-            optionStyle.push(styles.selectedOption);
-            textStyle.push(styles.selectedOptionText);
-          }
-
-          return (
-            <TouchableOpacity
-              key={index}
-              style={optionStyle}
-              onPress={() => !showResult && handleAnswerSelect(index)}
-              disabled={showResult}
-            >
-              <View style={styles.optionContent}>
-                <Text style={styles.optionIndex}>{String.fromCharCode(65 + index)}</Text>
-                <Text style={textStyle}>{option}</Text>
-                {showResult && index === currentQ.correctAnswer && (
-                  <Ionicons name="checkmark-circle" size={24} color={theme.success} />
-                )}
-                {showResult && index === selectedAnswer && selectedAnswer !== currentQ.correctAnswer && (
-                  <Ionicons name="close-circle" size={24} color={theme.error} />
-                )}
+      <ScrollView showsVerticalScrollIndicator={false}>
+        {/* 遊戲模式選擇區域 */}
+        <View style={styles.modeSection}>
+          <Text style={styles.sectionTitle}>學習模式</Text>
+          
+          {/* 每日抽考卡片 */}
+          <TouchableOpacity 
+            style={[
+              styles.modeCard, 
+              styles.dailyQuizCard,
+              !isGameAvailable && styles.disabledCard
+            ]}
+            onPress={handleDailyQuiz}
+            disabled={!isGameAvailable}
+          >
+            <View style={styles.modeHeader}>
+              <View style={styles.modeIconContainer}>
+                <Ionicons name="calendar" size={32} color={theme.primary} />
               </View>
-            </TouchableOpacity>
-          );
-        })}
-      </View>
+              <View style={styles.modeInfo}>
+                <Text style={styles.modeTitle}>每日抽考</Text>
+                <Text style={styles.modeSubtitle}>
+                  {availability.status === GAME_STATUS.AVAILABLE 
+                    ? '基於今日消費記錄的個人化測驗'
+                    : availability.message
+                  }
+                </Text>
+              </View>
+              <Ionicons 
+                name="chevron-forward" 
+                size={20} 
+                color={isGameAvailable ? theme.primary : theme.textSecondary} 
+              />
+            </View>
+            
+            <View style={styles.modeDetails}>
+              <View style={styles.detailItem}>
+                <Ionicons name="time" size={16} color={theme.textSecondary} />
+                <Text style={styles.detailText}>每日21:00-23:00</Text>
+              </View>
+              <View style={styles.detailItem}>
+                <Ionicons name="trophy" size={16} color={theme.textSecondary} />
+                <Text style={styles.detailText}>3-5個個人化問題</Text>
+              </View>
+              <View style={styles.detailItem}>
+                <Ionicons name="star" size={16} color={theme.textSecondary} />
+                <Text style={styles.detailText}>連擊加分系統</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
 
-      {/* 解釋區域 */}
-      {showResult && (
-        <View style={styles.explanationContainer}>
-          <Text style={styles.explanationTitle}>解釋</Text>
-          <Text style={styles.explanationText}>{currentQ.explanation}</Text>
+          {/* 練習模式卡片 */}
+          <TouchableOpacity 
+            style={[styles.modeCard, styles.practiceCard]}
+            onPress={() => setGameMode('practice')}
+          >
+            <View style={styles.modeHeader}>
+              <View style={styles.modeIconContainer}>
+                <Ionicons name="school" size={32} color={theme.accent} />
+              </View>
+              <View style={styles.modeInfo}>
+                <Text style={styles.modeTitle}>練習模式</Text>
+                <Text style={styles.modeSubtitle}>隨時練習理財基礎知識</Text>
+              </View>
+            </View>
+            
+            <View style={styles.modeDetails}>
+              <View style={styles.detailItem}>
+                <Ionicons name="infinite" size={16} color={theme.textSecondary} />
+                <Text style={styles.detailText}>無限制練習</Text>
+              </View>
+              <View style={styles.detailItem}>
+                <Ionicons name="book" size={16} color={theme.textSecondary} />
+                <Text style={styles.detailText}>理財知識題庫</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
         </View>
-      )}
 
-      {/* 按鈕區域 */}
-      <View style={styles.buttonContainer}>
-        {!showResult ? (
-          <TouchableOpacity
-            style={[styles.submitButton, selectedAnswer === null && styles.disabledButton]}
-            onPress={handleSubmitAnswer}
-            disabled={selectedAnswer === null}
-          >
-            <Text style={styles.submitButtonText}>確認答案</Text>
-          </TouchableOpacity>
-        ) : (
-          <TouchableOpacity
-            style={styles.nextButton}
-            onPress={handleNextQuestion}
-          >
-            <Text style={styles.nextButtonText}>
-              {currentQuestion < questions.length - 1 ? '下一題' : '完成測驗'}
-            </Text>
-          </TouchableOpacity>
+        {/* 統計區域 */}
+        <View style={styles.statsSection}>
+          <Text style={styles.sectionTitle}>學習統計</Text>
+          <View style={styles.statsRow}>
+            <View style={styles.statCard}>
+              <Ionicons name="trophy" size={24} color={theme.accent} />
+              <Text style={styles.statNumber}>{gameStats.totalGames}</Text>
+              <Text style={styles.statLabel}>完成次數</Text>
+            </View>
+            <View style={styles.statCard}>
+              <Ionicons name="trending-up" size={24} color={theme.primary} />
+              <Text style={styles.statNumber}>{gameStats.averageAccuracy}%</Text>
+              <Text style={styles.statLabel}>平均正確率</Text>
+            </View>
+            <View style={styles.statCard}>
+              <Ionicons name="star" size={24} color={theme.accent} />
+              <Text style={styles.statNumber}>{gameStats.bestScore}</Text>
+              <Text style={styles.statLabel}>最高分數</Text>
+            </View>
+          </View>
+        </View>
+
+        {/* 練習模式遊戲區域 */}
+        {gameMode === 'practice' && (
+          <>
+            {/* 進度條 */}
+            <View style={styles.progressContainer}>
+              <View style={styles.progressBar}>
+                <View style={[styles.progressFill, { width: `${progress}%` }]} />
+              </View>
+              <Text style={styles.progressText}>
+                {currentQuestion + 1} / {questions.length}
+              </Text>
+            </View>
+
+            {/* 題目區域 */}
+            <View style={styles.questionContainer}>
+              <Text style={styles.questionNumber}>第 {currentQuestion + 1} 題</Text>
+              <Text style={styles.questionText}>{currentQ.question}</Text>
+            </View>
+
+            {/* 選項區域 */}
+            <View style={styles.optionsContainer}>
+              {currentQ.options.map((option, index) => {
+                let optionStyle = [styles.optionButton];
+                let textStyle = [styles.optionText];
+
+                if (showResult) {
+                  if (index === currentQ.correctAnswer) {
+                    optionStyle.push(styles.correctOption);
+                    textStyle.push(styles.correctOptionText);
+                  } else if (index === selectedAnswer && selectedAnswer !== currentQ.correctAnswer) {
+                    optionStyle.push(styles.wrongOption);
+                    textStyle.push(styles.wrongOptionText);
+                  }
+                } else if (selectedAnswer === index) {
+                  optionStyle.push(styles.selectedOption);
+                  textStyle.push(styles.selectedOptionText);
+                }
+
+                return (
+                  <TouchableOpacity
+                    key={index}
+                    style={optionStyle}
+                    onPress={() => !showResult && handleAnswerSelect(index)}
+                    disabled={showResult}
+                  >
+                    <View style={styles.optionContent}>
+                      <Text style={styles.optionIndex}>{String.fromCharCode(65 + index)}</Text>
+                      <Text style={textStyle}>{option}</Text>
+                      {showResult && index === currentQ.correctAnswer && (
+                        <Ionicons name="checkmark-circle" size={24} color={theme.success} />
+                      )}
+                      {showResult && index === selectedAnswer && selectedAnswer !== currentQ.correctAnswer && (
+                        <Ionicons name="close-circle" size={24} color={theme.error} />
+                      )}
+                    </View>
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+
+            {/* 解釋區域 */}
+            {showResult && (
+              <View style={styles.explanationContainer}>
+                <Text style={styles.explanationTitle}>解釋</Text>
+                <Text style={styles.explanationText}>{currentQ.explanation}</Text>
+              </View>
+            )}
+
+            {/* 按鈕區域 */}
+            <View style={styles.buttonContainer}>
+              {!showResult ? (
+                <TouchableOpacity
+                  style={[styles.submitButton, selectedAnswer === null && styles.disabledButton]}
+                  onPress={handleSubmitAnswer}
+                  disabled={selectedAnswer === null}
+                >
+                  <Text style={styles.submitButtonText}>確認答案</Text>
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity
+                  style={styles.nextButton}
+                  onPress={handleNextQuestion}
+                >
+                  <Text style={styles.nextButtonText}>
+                    {currentQuestion < questions.length - 1 ? '下一題' : '完成測驗'}
+                  </Text>
+                </TouchableOpacity>
+              )}
+              
+              <TouchableOpacity
+                style={styles.resetButton}
+                onPress={resetQuiz}
+              >
+                <Ionicons name="refresh" size={20} color={theme.textSecondary} />
+                <Text style={styles.resetButtonText}>重新開始</Text>
+              </TouchableOpacity>
+            </View>
+          </>
         )}
-        
-        <TouchableOpacity
-          style={styles.resetButton}
-          onPress={resetQuiz}
-        >
-          <Ionicons name="refresh" size={20} color={theme.textSecondary} />
-          <Text style={styles.resetButtonText}>重新開始</Text>
-        </TouchableOpacity>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -232,6 +357,117 @@ const styles = StyleSheet.create({
     backgroundColor: theme.background,
     padding: 20,
   },
+  
+  // 模式選擇區域
+  modeSection: {
+    marginBottom: 30,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: theme.text,
+    marginBottom: 16,
+  },
+  modeCard: {
+    backgroundColor: theme.surface,
+    borderRadius: 16,
+    padding: 20,
+    marginBottom: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  dailyQuizCard: {
+    borderLeftWidth: 4,
+    borderLeftColor: theme.primary,
+  },
+  practiceCard: {
+    borderLeftWidth: 4,
+    borderLeftColor: theme.accent,
+  },
+  disabledCard: {
+    opacity: 0.6,
+  },
+  modeHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  modeIconContainer: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: theme.background,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 16,
+  },
+  modeInfo: {
+    flex: 1,
+  },
+  modeTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: theme.text,
+  },
+  modeSubtitle: {
+    fontSize: 14,
+    color: theme.textSecondary,
+    marginTop: 4,
+    lineHeight: 20,
+  },
+  modeDetails: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    flexWrap: 'wrap',
+  },
+  detailItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  detailText: {
+    fontSize: 12,
+    color: theme.textSecondary,
+    marginLeft: 6,
+  },
+
+  // 統計區域
+  statsSection: {
+    marginBottom: 30,
+  },
+  statsRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  statCard: {
+    backgroundColor: theme.surface,
+    borderRadius: 12,
+    padding: 16,
+    alignItems: 'center',
+    flex: 1,
+    marginHorizontal: 4,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+  statNumber: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: theme.text,
+    marginTop: 8,
+  },
+  statLabel: {
+    fontSize: 12,
+    color: theme.textSecondary,
+    marginTop: 4,
+  },
+
+  // 練習模式遊戲區域（保持原有樣式）
   progressContainer: {
     flexDirection: 'row',
     alignItems: 'center',
