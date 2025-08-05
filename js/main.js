@@ -8,8 +8,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // 初始化評分滑塊
     initRatingSliders();
     
-    // 初始化表單處理
-    initFormHandlers();
+    // 初始化表單處理（僅適用於非journal頁面）
+    if (!document.getElementById('journalForm')) {
+        initFormHandlers();
+    }
     
     // 初始化搜尋功能
     initSearchFunction();

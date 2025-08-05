@@ -1775,3 +1775,120 @@ body {
         transition-duration: 0.01ms !important;
     }
 }
+
+/* 草稿通知樣式 */
+.draft-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-md);
+    box-shadow: var(--shadow-lg);
+    z-index: 10000;
+    animation: slideIn 0.3s ease;
+    max-width: 300px;
+}
+
+.draft-content {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.draft-icon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.draft-text {
+    flex: 1;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.draft-actions {
+    display: flex;
+    gap: var(--spacing-xs);
+    margin-top: var(--spacing-sm);
+}
+
+/* 消息提示樣式 */
+.message-toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 12px 20px;
+    border-radius: 8px;
+    color: white;
+    font-weight: 500;
+    z-index: 10000;
+    animation: slideIn 0.3s ease;
+    max-width: 300px;
+    word-wrap: break-word;
+}
+
+.message-success {
+    background-color: var(--success-color);
+}
+
+.message-error {
+    background-color: var(--error-color);
+}
+
+.message-info {
+    background-color: var(--info-color);
+}
+
+.message-warning {
+    background-color: var(--warning-color);
+}
+
+/* 載入狀態樣式 */
+.form-loading {
+    position: relative;
+    pointer-events: none;
+}
+
+.form-loading::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(2px);
+    border-radius: var(--border-radius);
+    z-index: 10;
+}
+
+.form-loading .btn[type="submit"] {
+    position: relative;
+    z-index: 11;
+}
+
+/* 滑入動畫 */
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* 滑出動畫 */
+@keyframes slideOut {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
