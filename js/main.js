@@ -2,6 +2,9 @@
 
 // 當DOM載入完成後執行
 document.addEventListener('DOMContentLoaded', function() {
+    // 初始化導航系統
+    initNavigation();
+    
     // 初始化評分滑塊
     initRatingSliders();
     
@@ -17,6 +20,68 @@ document.addEventListener('DOMContentLoaded', function() {
     // 設定當前日期和時間
     setCurrentDateTime();
 });
+
+// 初始化導航系統
+function initNavigation() {
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('navMenu');
+    
+    if (hamburger && navMenu) {
+        // 漢堡選單點擊事件
+        hamburger.addEventListener('click', function() {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+            
+            // 防止背景滾動
+            document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
+        });
+        
+        // 點擊導航項目時關閉選單
+        const navLinks = navMenu.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+        
+        // 點擊外部區域關閉選單
+        document.addEventListener('click', function(event) {
+            if (!hamburger.contains(event.target) && !navMenu.contains(event.target)) {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+        
+        // 視窗大小改變時重置選單狀態
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+    }
+    
+    // 高亮當前頁面
+    highlightCurrentPage();
+}
+
+// 高亮當前頁面
+function highlightCurrentPage() {
+    const currentPath = window.location.pathname;
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === currentPath.split('/').pop() || 
+            (currentPath === '/' && link.getAttribute('href') === 'index.html')) {
+            link.classList.add('active');
+        }
+    });
+}
 
 // 初始化評分滑塊
 function initRatingSliders() {
