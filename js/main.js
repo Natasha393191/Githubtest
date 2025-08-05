@@ -83,9 +83,28 @@ function highlightCurrentPage() {
     });
 }
 
-// 初始化評分滑塊
+// 初始化評分滑塊和情緒滑桿
 function initRatingSliders() {
-    const ratingSliders = document.querySelectorAll('input[type="range"]');
+    // 初始化情緒狀態滑桿
+    const moodSliders = document.querySelectorAll('.mood-slider');
+    
+    moodSliders.forEach(slider => {
+        const valueDisplay = document.getElementById(slider.id + '-value');
+        const fillElement = document.getElementById(slider.id + '-fill');
+        
+        if (valueDisplay && fillElement) {
+            // 更新顯示值和填充條
+            updateMoodSlider(slider, valueDisplay, fillElement);
+            
+            // 監聽滑塊變化
+            slider.addEventListener('input', function() {
+                updateMoodSlider(this, valueDisplay, fillElement);
+            });
+        }
+    });
+    
+    // 初始化一般評分滑塊
+    const ratingSliders = document.querySelectorAll('input[type="range"]:not(.mood-slider)');
     
     ratingSliders.forEach(slider => {
         const valueDisplay = slider.nextElementSibling;
@@ -101,12 +120,33 @@ function initRatingSliders() {
     });
 }
 
+// 更新情緒滑桿顯示
+function updateMoodSlider(slider, valueDisplay, fillElement) {
+    const value = slider.value;
+    const percentage = (value - 1) / 9 * 100; // 1-10 轉換為 0-100%
+    
+    valueDisplay.textContent = value;
+    fillElement.style.width = percentage + '%';
+    
+    // 根據數值改變顏色
+    if (value <= 3) {
+        fillElement.style.background = 'var(--error-color)';
+    } else if (value <= 6) {
+        fillElement.style.background = 'var(--warning-color)';
+    } else {
+        fillElement.style.background = 'var(--success-color)';
+    }
+}
+
 // 初始化表單處理
 function initFormHandlers() {
     // 覺察記錄表單
     const journalForm = document.getElementById('journalForm');
     if (journalForm) {
         journalForm.addEventListener('submit', handleJournalSubmit);
+        initFormValidation(journalForm);
+        initCharacterCounters();
+        initCustomDuration();
     }
     
     // 快速記錄表單
@@ -116,33 +156,128 @@ function initFormHandlers() {
     }
 }
 
+// 初始化表單驗證
+function initFormValidation(form) {
+    const inputs = form.querySelectorAll('input, select, textarea');
+    
+    inputs.forEach(input => {
+        // 即時驗證
+        input.addEventListener('blur', function() {
+            validateField(this);
+        });
+        
+        input.addEventListener('input', function() {
+            if (this.classList.contains('error')) {
+                validateField(this);
+            }
+        });
+    });
+}
+
+// 初始化字數統計
+function initCharacterCounters() {
+    const textareas = document.querySelectorAll('textarea');
+    
+    textareas.forEach(textarea => {
+        const counter = document.getElementById(textarea.id.replace('-', '-') + '-count');
+        if (counter) {
+            updateCharacterCount(textarea, counter);
+            
+            textarea.addEventListener('input', function() {
+                updateCharacterCount(this, counter);
+            });
+        }
+    });
+}
+
+// 更新字數統計
+function updateCharacterCount(textarea, counter) {
+    const count = textarea.value.length;
+    const maxLength = getMaxLength(textarea.id);
+    
+    counter.textContent = count;
+    
+    // 移除舊的警告類別
+    counter.parentElement.classList.remove('warning', 'error');
+    
+    // 根據字數添加警告類別
+    if (count > maxLength * 0.8 && count <= maxLength) {
+        counter.parentElement.classList.add('warning');
+    } else if (count > maxLength) {
+        counter.parentElement.classList.add('error');
+    }
+}
+
+// 獲取最大字數
+function getMaxLength(textareaId) {
+    const maxLengths = {
+        'physical-sensations': 500,
+        'awareness-notes': 1000,
+        'mindfulness-reminder': 200
+    };
+    return maxLengths[textareaId] || 1000;
+}
+
+// 初始化自訂時長
+function initCustomDuration() {
+    const durationSelect = document.getElementById('session-duration');
+    const customGroup = document.getElementById('customDurationGroup');
+    const customInput = document.getElementById('custom-duration');
+    
+    if (durationSelect && customGroup && customInput) {
+        durationSelect.addEventListener('change', function() {
+            if (this.value === 'other') {
+                customGroup.style.display = 'block';
+                customInput.required = true;
+            } else {
+                customGroup.style.display = 'none';
+                customInput.required = false;
+                customInput.value = '';
+            }
+        });
+    }
+}
+
 // 處理覺察記錄表單提交
 function handleJournalSubmit(event) {
     event.preventDefault();
     
-    const formData = new FormData(event.target);
+    const form = event.target;
+    const formData = new FormData(form);
     const data = Object.fromEntries(formData);
     
     // 收集複選框的值
     const meditationTypes = formData.getAll('meditation-type');
+    const thoughtTypes = formData.getAll('thought-type');
     data.meditationTypes = meditationTypes;
+    data.thoughtTypes = thoughtTypes;
     
-    // 驗證必填欄位
-    if (!validateJournalForm(data)) {
+    // 驗證所有欄位
+    if (!validateJournalForm(form, data)) {
         return;
     }
     
-    // 儲存數據（這裡可以連接到後端API）
-    saveJournalEntry(data);
+    // 顯示載入狀態
+    form.classList.add('form-loading');
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<span class="btn-icon">⏳</span><span class="btn-text">保存中...</span>';
     
-    // 顯示成功訊息
-    showSuccessMessage('覺察記錄已成功保存！');
-    
-    // 重置表單
-    event.target.reset();
-    
-    // 重置評分滑塊
-    resetRatingSliders();
+    // 模擬API調用
+    setTimeout(() => {
+        // 儲存數據（這裡可以連接到後端API）
+        saveJournalEntry(data);
+        
+        // 顯示成功訊息
+        showSuccessMessage('覺察記錄已成功保存！');
+        
+        // 重置表單
+        resetForm();
+        
+        // 恢復按鈕狀態
+        form.classList.remove('form-loading');
+        submitBtn.innerHTML = originalText;
+    }, 1500);
 }
 
 // 處理快速記錄表單提交
@@ -169,19 +304,127 @@ function handleQuickSubmit(event) {
 }
 
 // 驗證覺察記錄表單
-function validateJournalForm(data) {
-    const requiredFields = ['date', 'time', 'duration', 'before-mood', 'after-mood'];
+function validateJournalForm(form, data) {
+    let isValid = true;
     
-    for (const field of requiredFields) {
-        if (!data[field]) {
-            showErrorMessage(`請填寫 ${getFieldLabel(field)}`);
+    // 清除所有錯誤狀態
+    clearAllErrors(form);
+    
+    // 驗證必填欄位
+    const requiredFields = [
+        { name: 'date', label: '日期' },
+        { name: 'time', label: '時間' },
+        { name: 'duration', label: '冥想時長' },
+        { name: 'before-mood', label: '冥想前情緒狀態' },
+        { name: 'after-mood', label: '冥想後情緒狀態' },
+        { name: 'awareness-notes', label: '覺察筆記' }
+    ];
+    
+    requiredFields.forEach(field => {
+        const element = form.querySelector(`[name="${field.name}"]`);
+        if (!element || !element.value.trim()) {
+            showFieldError(element, `請填寫${field.label}`);
+            isValid = false;
+        }
+    });
+    
+    // 驗證冥想類型
+    const meditationTypes = form.querySelectorAll('input[name="meditation-type"]:checked');
+    if (meditationTypes.length === 0) {
+        const errorElement = document.getElementById('meditation-type-error');
+        if (errorElement) {
+            errorElement.textContent = '請至少選擇一種冥想類型';
+        }
+        isValid = false;
+    }
+    
+    // 驗證自訂時長
+    if (data.duration === 'other' && (!data['custom-duration'] || data['custom-duration'] < 1 || data['custom-duration'] > 180)) {
+        const customInput = form.querySelector('#custom-duration');
+        showFieldError(customInput, '請輸入1-180分鐘之間的時長');
+        isValid = false;
+    }
+    
+    // 驗證字數限制
+    const textareas = form.querySelectorAll('textarea');
+    textareas.forEach(textarea => {
+        const maxLength = getMaxLength(textarea.id);
+        if (textarea.value.length > maxLength) {
+            showFieldError(textarea, `字數超過限制（最多${maxLength}字）`);
+            isValid = false;
+        }
+    });
+    
+    return isValid;
+}
+
+// 顯示欄位錯誤
+function showFieldError(element, message) {
+    if (!element) return;
+    
+    const formGroup = element.closest('.form-group');
+    const errorElement = document.getElementById(element.id + '-error') || 
+                        formGroup.querySelector('.error-message');
+    
+    if (formGroup) {
+        formGroup.classList.add('error');
+    }
+    
+    if (errorElement) {
+        errorElement.textContent = message;
+    }
+}
+
+// 清除所有錯誤
+function clearAllErrors(form) {
+    const formGroups = form.querySelectorAll('.form-group');
+    const errorMessages = form.querySelectorAll('.error-message');
+    
+    formGroups.forEach(group => {
+        group.classList.remove('error', 'success');
+    });
+    
+    errorMessages.forEach(error => {
+        error.textContent = '';
+    });
+}
+
+// 驗證單個欄位
+function validateField(field) {
+    const formGroup = field.closest('.form-group');
+    const errorElement = document.getElementById(field.id + '-error') || 
+                        formGroup.querySelector('.error-message');
+    
+    // 清除舊的錯誤狀態
+    formGroup.classList.remove('error', 'success');
+    if (errorElement) {
+        errorElement.textContent = '';
+    }
+    
+    // 驗證必填欄位
+    if (field.hasAttribute('required') && !field.value.trim()) {
+        formGroup.classList.add('error');
+        if (errorElement) {
+            errorElement.textContent = '此欄位為必填';
+        }
+        return false;
+    }
+    
+    // 驗證字數限制
+    if (field.tagName === 'TEXTAREA') {
+        const maxLength = getMaxLength(field.id);
+        if (field.value.length > maxLength) {
+            formGroup.classList.add('error');
+            if (errorElement) {
+                errorElement.textContent = `字數超過限制（最多${maxLength}字）`;
+            }
             return false;
         }
     }
     
-    if (data.duration < 1 || data.duration > 180) {
-        showErrorMessage('冥想時長應在1-180分鐘之間');
-        return false;
+    // 驗證成功
+    if (field.value.trim()) {
+        formGroup.classList.add('success');
     }
     
     return true;
@@ -234,7 +477,41 @@ function resetForm() {
     if (form) {
         form.reset();
         resetRatingSliders();
+        resetMoodSliders();
+        resetCharacterCounters();
+        hideCustomDuration();
+        clearAllErrors(form);
         showSuccessMessage('表單已重置');
+    }
+}
+
+// 重置情緒滑桿
+function resetMoodSliders() {
+    const moodSliders = document.querySelectorAll('.mood-slider');
+    moodSliders.forEach(slider => {
+        slider.value = 5;
+        const valueDisplay = document.getElementById(slider.id + '-value');
+        const fillElement = document.getElementById(slider.id + '-fill');
+        if (valueDisplay && fillElement) {
+            updateMoodSlider(slider, valueDisplay, fillElement);
+        }
+    });
+}
+
+// 重置字數統計
+function resetCharacterCounters() {
+    const counters = document.querySelectorAll('.character-count span');
+    counters.forEach(counter => {
+        counter.textContent = '0';
+        counter.parentElement.classList.remove('warning', 'error');
+    });
+}
+
+// 隱藏自訂時長
+function hideCustomDuration() {
+    const customGroup = document.getElementById('customDurationGroup');
+    if (customGroup) {
+        customGroup.style.display = 'none';
     }
 }
 

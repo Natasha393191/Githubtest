@@ -65,162 +65,238 @@
                 <p>靜心記錄您的冥想體驗和內在覺察</p>
             </header>
 
-            <!-- 覺察記錄表單 -->
+            <!-- 詳細正念冥想記錄表單 -->
             <section class="journal-form-section">
-                <form class="journal-form" id="journalForm">
+                <form class="journal-form" id="journalForm" novalidate>
                     <!-- 基本資訊 -->
                     <div class="form-section">
-                        <h3>基本資訊</h3>
+                        <h3>📅 基本資訊</h3>
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="session-date">日期</label>
+                                <label for="session-date">日期 <span class="required">*</span></label>
                                 <input type="date" id="session-date" name="date" required>
+                                <div class="error-message" id="date-error"></div>
                             </div>
                             <div class="form-group">
-                                <label for="session-time">時間</label>
+                                <label for="session-time">時間 <span class="required">*</span></label>
                                 <input type="time" id="session-time" name="time" required>
+                                <div class="error-message" id="time-error"></div>
                             </div>
                             <div class="form-group">
-                                <label for="session-duration">冥想時長（分鐘）</label>
-                                <input type="number" id="session-duration" name="duration" min="1" max="180" required>
+                                <label for="session-duration">冥想時長 <span class="required">*</span></label>
+                                <select id="session-duration" name="duration" required>
+                                    <option value="">請選擇時長...</option>
+                                    <option value="5">5分鐘</option>
+                                    <option value="10">10分鐘</option>
+                                    <option value="15">15分鐘</option>
+                                    <option value="20">20分鐘</option>
+                                    <option value="30">30分鐘</option>
+                                    <option value="other">其他</option>
+                                </select>
+                                <div class="error-message" id="duration-error"></div>
                             </div>
+                        </div>
+                        <div class="form-group custom-duration" id="customDurationGroup" style="display: none;">
+                            <label for="custom-duration">自訂時長（分鐘）</label>
+                            <input type="number" id="custom-duration" name="custom-duration" min="1" max="180" placeholder="請輸入分鐘數">
                         </div>
                     </div>
 
                     <!-- 冥想類型 -->
                     <div class="form-section">
-                        <h3>冥想類型</h3>
+                        <h3>🧘 冥想類型</h3>
                         <div class="form-group">
-                            <label>選擇冥想類型（可多選）</label>
-                            <div class="checkbox-group">
+                            <label>選擇冥想類型（可多選） <span class="required">*</span></label>
+                            <div class="checkbox-group meditation-types">
                                 <label class="checkbox-item">
                                     <input type="checkbox" name="meditation-type" value="breathing">
-                                    <span>呼吸冥想</span>
+                                    <span class="checkbox-icon">🫁</span>
+                                    <span class="checkbox-text">呼吸冥想</span>
                                 </label>
                                 <label class="checkbox-item">
                                     <input type="checkbox" name="meditation-type" value="body-scan">
-                                    <span>身體掃描</span>
+                                    <span class="checkbox-icon">👤</span>
+                                    <span class="checkbox-text">身體掃描</span>
                                 </label>
                                 <label class="checkbox-item">
                                     <input type="checkbox" name="meditation-type" value="loving-kindness">
-                                    <span>慈心冥想</span>
+                                    <span class="checkbox-icon">💝</span>
+                                    <span class="checkbox-text">慈心冥想</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="meditation-type" value="walking">
+                                    <span class="checkbox-icon">🚶</span>
+                                    <span class="checkbox-text">行走冥想</span>
                                 </label>
                                 <label class="checkbox-item">
                                     <input type="checkbox" name="meditation-type" value="mindfulness">
-                                    <span>正念冥想</span>
+                                    <span class="checkbox-icon">🧠</span>
+                                    <span class="checkbox-text">正念冥想</span>
                                 </label>
                                 <label class="checkbox-item">
                                     <input type="checkbox" name="meditation-type" value="transcendental">
-                                    <span>超覺冥想</span>
+                                    <span class="checkbox-icon">✨</span>
+                                    <span class="checkbox-text">超覺冥想</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="meditation-type" value="zen">
+                                    <span class="checkbox-icon">🌸</span>
+                                    <span class="checkbox-text">禪修</span>
                                 </label>
                                 <label class="checkbox-item">
                                     <input type="checkbox" name="meditation-type" value="other">
-                                    <span>其他</span>
+                                    <span class="checkbox-icon">🌟</span>
+                                    <span class="checkbox-text">其他</span>
                                 </label>
                             </div>
+                            <div class="error-message" id="meditation-type-error"></div>
                         </div>
                     </div>
 
                     <!-- 情緒狀態 -->
                     <div class="form-section">
-                        <h3>情緒狀態</h3>
+                        <h3>😌 情緒狀態</h3>
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="before-mood">冥想前心情</label>
-                                <select id="before-mood" name="before-mood" required>
-                                    <option value="">請選擇...</option>
-                                    <option value="very-stressed">非常緊張</option>
-                                    <option value="stressed">緊張</option>
-                                    <option value="neutral">平靜</option>
-                                    <option value="calm">放鬆</option>
-                                    <option value="very-calm">非常放鬆</option>
-                                </select>
+                                <label for="before-mood">冥想前情緒狀態 <span class="required">*</span></label>
+                                <div class="mood-slider-container">
+                                    <div class="mood-labels">
+                                        <span class="mood-label">非常焦慮</span>
+                                        <span class="mood-label">非常平靜</span>
+                                    </div>
+                                    <div class="slider-wrapper">
+                                        <input type="range" id="before-mood" name="before-mood" min="1" max="10" value="5" class="mood-slider">
+                                        <div class="slider-track">
+                                            <div class="slider-fill" id="before-mood-fill"></div>
+                                        </div>
+                                        <span class="slider-value" id="before-mood-value">5</span>
+                                    </div>
+                                </div>
+                                <div class="error-message" id="before-mood-error"></div>
                             </div>
                             <div class="form-group">
-                                <label for="after-mood">冥想後心情</label>
-                                <select id="after-mood" name="after-mood" required>
-                                    <option value="">請選擇...</option>
-                                    <option value="very-stressed">非常緊張</option>
-                                    <option value="stressed">緊張</option>
-                                    <option value="neutral">平靜</option>
-                                    <option value="calm">放鬆</option>
-                                    <option value="very-calm">非常放鬆</option>
-                                </select>
+                                <label for="after-mood">冥想後情緒狀態 <span class="required">*</span></label>
+                                <div class="mood-slider-container">
+                                    <div class="mood-labels">
+                                        <span class="mood-label">非常焦慮</span>
+                                        <span class="mood-label">非常平靜</span>
+                                    </div>
+                                    <div class="slider-wrapper">
+                                        <input type="range" id="after-mood" name="after-mood" min="1" max="10" value="5" class="mood-slider">
+                                        <div class="slider-track">
+                                            <div class="slider-fill" id="after-mood-fill"></div>
+                                        </div>
+                                        <span class="slider-value" id="after-mood-value">5</span>
+                                    </div>
+                                </div>
+                                <div class="error-message" id="after-mood-error"></div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- 覺察體驗 -->
+                    <!-- 思緒觀察 -->
                     <div class="form-section">
-                        <h3>覺察體驗</h3>
+                        <h3>💭 思緒觀察</h3>
                         <div class="form-group">
-                            <label for="physical-sensations">身體感受</label>
+                            <label>觀察到的思緒類型（可多選）</label>
+                            <div class="checkbox-group thought-types">
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="thought-type" value="worry">
+                                    <span class="checkbox-icon">😰</span>
+                                    <span class="checkbox-text">擔憂</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="thought-type" value="memory">
+                                    <span class="checkbox-icon">📖</span>
+                                    <span class="checkbox-text">回憶</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="thought-type" value="planning">
+                                    <span class="checkbox-icon">📋</span>
+                                    <span class="checkbox-text">計劃</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="thought-type" value="judgment">
+                                    <span class="checkbox-icon">⚖️</span>
+                                    <span class="checkbox-text">批判</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="thought-type" value="gratitude">
+                                    <span class="checkbox-icon">🙏</span>
+                                    <span class="checkbox-text">感恩</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="thought-type" value="curiosity">
+                                    <span class="checkbox-icon">🤔</span>
+                                    <span class="checkbox-text">好奇</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="thought-type" value="peaceful">
+                                    <span class="checkbox-icon">😌</span>
+                                    <span class="checkbox-text">平靜</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="thought-type" value="other">
+                                    <span class="checkbox-icon">💫</span>
+                                    <span class="checkbox-text">其他</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 身體感受 -->
+                    <div class="form-section">
+                        <h3>🫂 身體感受</h3>
+                        <div class="form-group">
+                            <label for="physical-sensations">身體感受記錄</label>
                             <textarea id="physical-sensations" name="physical-sensations" 
-                                placeholder="描述身體的感受，如：放鬆、緊繃、溫暖、涼爽等..." rows="3"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="thoughts">思緒觀察</label>
-                            <textarea id="thoughts" name="thoughts" 
-                                placeholder="觀察到的思緒，如：思緒是否平靜、有特定想法浮現等..." rows="3"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="emotions">情緒覺察</label>
-                            <textarea id="emotions" name="emotions" 
-                                placeholder="覺察到的情緒，如：喜悅、平靜、焦慮、感恩等..." rows="3"></textarea>
-                        </div>
-                    </div>
-
-                    <!-- 挑戰與突破 -->
-                    <div class="form-section">
-                        <h3>挑戰與突破</h3>
-                        <div class="form-group">
-                            <label for="challenges">遇到的挑戰</label>
-                            <textarea id="challenges" name="challenges" 
-                                placeholder="描述冥想過程中遇到的困難，如：分心、身體不適、時間感等..." rows="3"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="insights">洞察與領悟</label>
-                            <textarea id="insights" name="insights" 
-                                placeholder="記錄任何新的洞察、領悟或理解..." rows="3"></textarea>
-                        </div>
-                    </div>
-
-                    <!-- 感恩與意圖 -->
-                    <div class="form-section">
-                        <h3>感恩與意圖</h3>
-                        <div class="form-group">
-                            <label for="gratitude">今日感恩</label>
-                            <textarea id="gratitude" name="gratitude" 
-                                placeholder="記錄想要感恩的人、事、物..." rows="3"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="intention">明日意圖</label>
-                            <textarea id="intention" name="intention" 
-                                placeholder="設定明天的正念意圖或目標..." rows="3"></textarea>
-                        </div>
-                    </div>
-
-                    <!-- 評分 -->
-                    <div class="form-section">
-                        <h3>體驗評分</h3>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="focus-rating">專注度 (1-10)</label>
-                                <input type="range" id="focus-rating" name="focus-rating" min="1" max="10" value="5">
-                                <span class="rating-value">5</span>
+                                placeholder="請描述您在冥想過程中感受到的身體狀態，例如：&#10;• 哪些部位感到放鬆或緊繃？&#10;• 有感受到溫暖、涼爽或其他溫度變化嗎？&#10;• 呼吸的節奏和深度如何？&#10;• 有注意到任何身體的微妙感受嗎？" 
+                                rows="5"></textarea>
+                            <div class="character-count">
+                                <span id="physical-count">0</span> / 500 字
                             </div>
-                            <div class="form-group">
-                                <label for="peace-rating">平靜度 (1-10)</label>
-                                <input type="range" id="peace-rating" name="peace-rating" min="1" max="10" value="5">
-                                <span class="rating-value">5</span>
+                        </div>
+                    </div>
+
+                    <!-- 覺察筆記 -->
+                    <div class="form-section">
+                        <h3>📝 覺察筆記</h3>
+                        <div class="form-group">
+                            <label for="awareness-notes">覺察筆記 <span class="required">*</span></label>
+                            <textarea id="awareness-notes" name="awareness-notes" 
+                                placeholder="請記錄您在冥想過程中的覺察和體驗，例如：&#10;• 今天的心境如何？&#10;• 觀察到了什麼樣的想法和情緒？&#10;• 有什麼新的洞察或領悟？&#10;• 遇到了什麼挑戰，又是如何面對的？&#10;• 對這次冥想體驗有什麼感受？" 
+                                rows="8" required></textarea>
+                            <div class="character-count">
+                                <span id="awareness-count">0</span> / 1000 字
+                            </div>
+                            <div class="error-message" id="awareness-notes-error"></div>
+                        </div>
+                    </div>
+
+                    <!-- 正念提醒 -->
+                    <div class="form-section">
+                        <h3>💝 今日正念提醒</h3>
+                        <div class="form-group">
+                            <label for="mindfulness-reminder">給自己的溫暖話語（選填）</label>
+                            <textarea id="mindfulness-reminder" name="mindfulness-reminder" 
+                                placeholder="為自己寫下一句溫暖的正念提醒，例如：&#10;• 「我願意以慈悲的心對待自己」&#10;• 「每一次呼吸都是新的開始」&#10;• 「我接納當下的所有感受」&#10;• 「我值得擁有內在的平靜」" 
+                                rows="4"></textarea>
+                            <div class="character-count">
+                                <span id="reminder-count">0</span> / 200 字
                             </div>
                         </div>
                     </div>
 
                     <!-- 提交按鈕 -->
                     <div class="form-actions">
-                        <button type="submit" class="btn btn-primary">保存覺察記錄</button>
-                        <button type="button" class="btn btn-secondary" onclick="resetForm()">重新開始</button>
+                        <button type="submit" class="btn btn-primary">
+                            <span class="btn-icon">💾</span>
+                            <span class="btn-text">保存覺察記錄</span>
+                        </button>
+                        <button type="button" class="btn btn-secondary" onclick="resetForm()">
+                            <span class="btn-icon">🔄</span>
+                            <span class="btn-text">重新開始</span>
+                        </button>
                     </div>
                 </form>
             </section>

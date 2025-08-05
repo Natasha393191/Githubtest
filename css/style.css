@@ -513,18 +513,157 @@ body {
     border-radius: var(--border-radius);
     transition: var(--transition-normal);
     border: 2px solid transparent;
+    background: var(--background-color);
 }
 
 .checkbox-item:hover {
     background-color: var(--accent-color);
     border-color: var(--secondary-color);
     transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
 }
 
 .checkbox-item input[type="checkbox"] {
     width: 20px;
     height: 20px;
     accent-color: var(--primary-color);
+}
+
+.checkbox-icon {
+    font-size: 1.2rem;
+    min-width: 24px;
+    text-align: center;
+}
+
+.checkbox-text {
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+/* 必填欄位標示 */
+.required {
+    color: var(--error-color);
+    font-weight: 600;
+}
+
+/* 錯誤訊息樣式 */
+.error-message {
+    color: var(--error-color);
+    font-size: 0.85rem;
+    margin-top: var(--spacing-xs);
+    min-height: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.error-message::before {
+    content: '⚠️';
+    font-size: 0.8rem;
+}
+
+/* 字數統計 */
+.character-count {
+    text-align: right;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: var(--spacing-xs);
+}
+
+.character-count.warning {
+    color: var(--warning-color);
+}
+
+.character-count.error {
+    color: var(--error-color);
+}
+
+/* 情緒狀態滑桿 */
+.mood-slider-container {
+    margin-top: var(--spacing-sm);
+}
+
+.mood-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-sm);
+    font-size: 0.85rem;
+    color: var(--text-light);
+}
+
+.mood-label {
+    font-weight: 500;
+}
+
+.slider-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.mood-slider {
+    flex: 1;
+    height: 8px;
+    border-radius: 4px;
+    background: transparent;
+    outline: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+    position: relative;
+    z-index: 2;
+}
+
+.slider-track {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 8px;
+    background: var(--border-color);
+    border-radius: 4px;
+    transform: translateY(-50%);
+    z-index: 1;
+}
+
+.slider-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--error-color), var(--warning-color), var(--success-color));
+    border-radius: 4px;
+    transition: var(--transition-normal);
+    width: 50%;
+}
+
+.mood-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: white;
+    border: 3px solid var(--primary-color);
+    cursor: pointer;
+    box-shadow: var(--shadow-md);
+    transition: var(--transition-fast);
+    z-index: 3;
+}
+
+.mood-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    box-shadow: var(--shadow-lg);
+}
+
+.slider-value {
+    display: inline-block;
+    font-weight: 600;
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    min-width: 30px;
+    text-align: center;
+    background: var(--accent-color);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-sm);
 }
 
 /* 評分滑塊 */
@@ -577,6 +716,62 @@ body {
     justify-content: center;
     margin-top: var(--spacing-xl);
     flex-wrap: wrap;
+}
+
+.btn-icon {
+    font-size: 1.1rem;
+    margin-right: var(--spacing-xs);
+}
+
+.btn-text {
+    font-weight: 600;
+}
+
+/* 自訂時長欄位 */
+.custom-duration {
+    margin-top: var(--spacing-md);
+    padding-top: var(--spacing-md);
+    border-top: 1px solid var(--border-color);
+}
+
+/* 表單驗證狀態 */
+.form-group.error input,
+.form-group.error select,
+.form-group.error textarea {
+    border-color: var(--error-color);
+    box-shadow: 0 0 0 3px rgba(252, 129, 129, 0.1);
+}
+
+.form-group.success input,
+.form-group.success select,
+.form-group.success textarea {
+    border-color: var(--success-color);
+    box-shadow: 0 0 0 3px rgba(104, 211, 145, 0.1);
+}
+
+/* 表單載入狀態 */
+.form-loading {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.form-loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--primary-color);
+    border-top: 2px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
 /* 快速記錄區域 */
