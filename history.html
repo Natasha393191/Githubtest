@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>歷史回顧 - 正念覺察筆記</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 導航選單 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h1>🧘 正念覺察</h1>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">首頁</a>
+                </li>
+                <li class="nav-item">
+                    <a href="journal.html" class="nav-link">記錄覺察</a>
+                </li>
+                <li class="nav-item">
+                    <a href="history.html" class="nav-link active">歷史回顧</a>
+                </li>
+                <li class="nav-item">
+                    <a href="stats.html" class="nav-link">統計分析</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 主要內容區域 -->
+    <main class="main-content">
+        <div class="container">
+            <!-- 頁面標題 -->
+            <header class="page-header">
+                <h2>歷史回顧</h2>
+                <p>回顧您的覺察旅程，看見內在的成長軌跡</p>
+            </header>
+
+            <!-- 篩選和搜尋區域 -->
+            <section class="filter-section">
+                <div class="filter-controls">
+                    <div class="search-box">
+                        <input type="text" id="search-input" placeholder="搜尋記錄內容..." class="search-input">
+                        <button type="button" class="search-btn">🔍</button>
+                    </div>
+                    <div class="filter-options">
+                        <select id="date-filter" class="filter-select">
+                            <option value="">所有時間</option>
+                            <option value="today">今天</option>
+                            <option value="week">本週</option>
+                            <option value="month">本月</option>
+                            <option value="quarter">本季</option>
+                            <option value="year">今年</option>
+                        </select>
+                        <select id="mood-filter" class="filter-select">
+                            <option value="">所有心情</option>
+                            <option value="very-calm">非常放鬆</option>
+                            <option value="calm">放鬆</option>
+                            <option value="neutral">平靜</option>
+                            <option value="stressed">緊張</option>
+                            <option value="very-stressed">非常緊張</option>
+                        </select>
+                        <select id="type-filter" class="filter-select">
+                            <option value="">所有類型</option>
+                            <option value="breathing">呼吸冥想</option>
+                            <option value="body-scan">身體掃描</option>
+                            <option value="loving-kindness">慈心冥想</option>
+                            <option value="mindfulness">正念冥想</option>
+                            <option value="transcendental">超覺冥想</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 記錄列表 -->
+            <section class="history-list">
+                <!-- 記錄項目 1 -->
+                <article class="journal-entry">
+                    <div class="entry-header">
+                        <div class="entry-date">
+                            <span class="date">2024年1月15日</span>
+                            <span class="time">上午 8:30</span>
+                        </div>
+                        <div class="entry-meta">
+                            <span class="duration">20分鐘</span>
+                            <span class="mood-badge calm">放鬆</span>
+                        </div>
+                    </div>
+                    <div class="entry-content">
+                        <h3 class="entry-title">晨間正念冥想</h3>
+                        <div class="entry-tags">
+                            <span class="tag">呼吸冥想</span>
+                            <span class="tag">正念冥想</span>
+                        </div>
+                        <div class="entry-summary">
+                            <p>今天早晨的冥想特別平靜，能夠清楚感受到呼吸的節奏。身體感覺放鬆，思緒也比較集中。注意到一些關於工作的想法浮現，但能夠溫和地將注意力帶回呼吸。</p>
+                        </div>
+                        <div class="entry-ratings">
+                            <span class="rating">專注度: 8/10</span>
+                            <span class="rating">平靜度: 9/10</span>
+                        </div>
+                    </div>
+                    <div class="entry-actions">
+                        <button class="btn btn-small" onclick="viewEntry(1)">查看詳情</button>
+                        <button class="btn btn-small btn-secondary" onclick="editEntry(1)">編輯</button>
+                    </div>
+                </article>
+
+                <!-- 記錄項目 2 -->
+                <article class="journal-entry">
+                    <div class="entry-header">
+                        <div class="entry-date">
+                            <span class="date">2024年1月14日</span>
+                            <span class="time">晚上 9:15</span>
+                        </div>
+                        <div class="entry-meta">
+                            <span class="duration">15分鐘</span>
+                            <span class="mood-badge very-calm">非常放鬆</span>
+                        </div>
+                    </div>
+                    <div class="entry-content">
+                        <h3 class="entry-title">睡前身體掃描</h3>
+                        <div class="entry-tags">
+                            <span class="tag">身體掃描</span>
+                        </div>
+                        <div class="entry-summary">
+                            <p>進行身體掃描時，發現肩膀和頸部有些緊繃。透過有意識的放鬆，感受到身體逐漸舒緩。睡前冥想幫助我更好地準備入睡，思緒也變得更加平靜。</p>
+                        </div>
+                        <div class="entry-ratings">
+                            <span class="rating">專注度: 7/10</span>
+                            <span class="rating">平靜度: 8/10</span>
+                        </div>
+                    </div>
+                    <div class="entry-actions">
+                        <button class="btn btn-small" onclick="viewEntry(2)">查看詳情</button>
+                        <button class="btn btn-small btn-secondary" onclick="editEntry(2)">編輯</button>
+                    </div>
+                </article>
+
+                <!-- 記錄項目 3 -->
+                <article class="journal-entry">
+                    <div class="entry-header">
+                        <div class="entry-date">
+                            <span class="date">2024年1月13日</span>
+                            <span class="time">下午 3:00</span>
+                        </div>
+                        <div class="entry-meta">
+                            <span class="duration">30分鐘</span>
+                            <span class="mood-badge neutral">平靜</span>
+                        </div>
+                    </div>
+                    <div class="entry-content">
+                        <h3 class="entry-title">慈心冥想練習</h3>
+                        <div class="entry-tags">
+                            <span class="tag">慈心冥想</span>
+                        </div>
+                        <div class="entry-summary">
+                            <p>今天嘗試了慈心冥想，向自己、親人、朋友和所有眾生發送慈愛。過程中感受到內心的溫暖，也意識到對自己的慈悲心還需要更多練習。這是一次很有啟發性的體驗。</p>
+                        </div>
+                        <div class="entry-ratings">
+                            <span class="rating">專注度: 6/10</span>
+                            <span class="rating">平靜度: 7/10</span>
+                        </div>
+                    </div>
+                    <div class="entry-actions">
+                        <button class="btn btn-small" onclick="viewEntry(3)">查看詳情</button>
+                        <button class="btn btn-small btn-secondary" onclick="editEntry(3)">編輯</button>
+                    </div>
+                </article>
+
+                <!-- 記錄項目 4 -->
+                <article class="journal-entry">
+                    <div class="entry-header">
+                        <div class="entry-date">
+                            <span class="date">2024年1月12日</span>
+                            <span class="time">上午 7:00</span>
+                        </div>
+                        <div class="entry-meta">
+                            <span class="duration">25分鐘</span>
+                            <span class="mood-badge stressed">緊張</span>
+                        </div>
+                    </div>
+                    <div class="entry-content">
+                        <h3 class="entry-title">面對壓力的正念練習</h3>
+                        <div class="entry-tags">
+                            <span class="tag">正念冥想</span>
+                        </div>
+                        <div class="entry-summary">
+                            <p>今天感到有些壓力，冥想時思緒比較紛亂。但透過觀察這些想法而不去評判，逐漸感受到內在的平靜。這提醒我正念練習在困難時刻的重要性。</p>
+                        </div>
+                        <div class="entry-ratings">
+                            <span class="rating">專注度: 5/10</span>
+                            <span class="rating">平靜度: 6/10</span>
+                        </div>
+                    </div>
+                    <div class="entry-actions">
+                        <button class="btn btn-small" onclick="viewEntry(4)">查看詳情</button>
+                        <button class="btn btn-small btn-secondary" onclick="editEntry(4)">編輯</button>
+                    </div>
+                </article>
+            </section>
+
+            <!-- 分頁控制 -->
+            <section class="pagination">
+                <div class="pagination-controls">
+                    <button class="btn btn-small" disabled>上一頁</button>
+                    <span class="page-info">第 1 頁，共 1 頁</span>
+                    <button class="btn btn-small" disabled>下一頁</button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- 頁腳 -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 正念覺察筆記. 與內在對話的寧靜空間.</p>
+        </div>
+    </footer>
+
+    <script src="./js/main.js"></script>
+</body>
+</html>

@@ -1,20 +1,114 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./css/all.css" />
-    <title>Document</title>
-  </head>
-  <body>
-    <h1>版本控制練習</h1>
-    <p>
-      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint in quis
-      aspernatur inventore beatae rem dolore nisi tempore architecto cupiditate,
-      quaerat accusamus iure aliquam delectus. Earum numquam itaque
-      exercitationem reprehenderit.
-    </p>
-    <button class="bbb">按我</button>
-  </body>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>正念覺察筆記 - 與內在對話的寧靜空間</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 導航選單 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h1>🧘 正念覺察</h1>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link active">首頁</a>
+                </li>
+                <li class="nav-item">
+                    <a href="journal.html" class="nav-link">記錄覺察</a>
+                </li>
+                <li class="nav-item">
+                    <a href="history.html" class="nav-link">歷史回顧</a>
+                </li>
+                <li class="nav-item">
+                    <a href="stats.html" class="nav-link">統計分析</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 主要內容區域 -->
+    <main class="main-content">
+        <!-- 歡迎區域 -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <h2 class="hero-title">歡迎來到您的正念覺察空間</h2>
+                <p class="hero-subtitle">在這裡，每一刻的覺察都是珍貴的禮物</p>
+                <div class="hero-actions">
+                    <a href="journal.html" class="btn btn-primary">開始今日覺察</a>
+                    <a href="history.html" class="btn btn-secondary">回顧過往記錄</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 快速記錄區域 -->
+        <section class="quick-journal">
+            <div class="container">
+                <h3>今日覺察速記</h3>
+                <form class="quick-form">
+                    <div class="form-group">
+                        <label for="current-mood">此刻的心情</label>
+                        <select id="current-mood" name="mood">
+                            <option value="">請選擇...</option>
+                            <option value="peaceful">平靜安詳</option>
+                            <option value="grateful">感恩喜悅</option>
+                            <option value="calm">寧靜放鬆</option>
+                            <option value="focused">專注集中</option>
+                            <option value="tired">疲憊</option>
+                            <option value="anxious">焦慮</option>
+                            <option value="sad">悲傷</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="quick-note">快速筆記</label>
+                        <textarea id="quick-note" name="note" placeholder="記錄此刻的想法、感受或覺察..." rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">保存覺察</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- 功能特色區域 -->
+        <section class="features">
+            <div class="container">
+                <h3>覺察之旅的夥伴</h3>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">📝</div>
+                        <h4>覺察記錄</h4>
+                        <p>記錄每一次的冥想體驗和內在覺察，建立屬於您的正念日誌</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <h4>情緒追蹤</h4>
+                        <p>透過圖表分析情緒變化趨勢，了解內在世界的波動</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🕰️</div>
+                        <h4>歷史回顧</h4>
+                        <p>回顧過往的覺察記錄，看見自己的成長軌跡</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🌱</div>
+                        <h4>正念提醒</h4>
+                        <p>定期提醒您停下來，與內在對話，保持覺察的習慣</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 頁腳 -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 正念覺察筆記. 與內在對話的寧靜空間.</p>
+        </div>
+    </footer>
+
+    <script src="./js/main.js"></script>
+</body>
 </html>

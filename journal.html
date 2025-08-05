@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>記錄覺察 - 正念覺察筆記</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 導航選單 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h1>🧘 正念覺察</h1>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">首頁</a>
+                </li>
+                <li class="nav-item">
+                    <a href="journal.html" class="nav-link active">記錄覺察</a>
+                </li>
+                <li class="nav-item">
+                    <a href="history.html" class="nav-link">歷史回顧</a>
+                </li>
+                <li class="nav-item">
+                    <a href="stats.html" class="nav-link">統計分析</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 主要內容區域 -->
+    <main class="main-content">
+        <div class="container">
+            <!-- 頁面標題 -->
+            <header class="page-header">
+                <h2>記錄今日覺察</h2>
+                <p>靜心記錄您的冥想體驗和內在覺察</p>
+            </header>
+
+            <!-- 覺察記錄表單 -->
+            <section class="journal-form-section">
+                <form class="journal-form" id="journalForm">
+                    <!-- 基本資訊 -->
+                    <div class="form-section">
+                        <h3>基本資訊</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="session-date">日期</label>
+                                <input type="date" id="session-date" name="date" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="session-time">時間</label>
+                                <input type="time" id="session-time" name="time" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="session-duration">冥想時長（分鐘）</label>
+                                <input type="number" id="session-duration" name="duration" min="1" max="180" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 冥想類型 -->
+                    <div class="form-section">
+                        <h3>冥想類型</h3>
+                        <div class="form-group">
+                            <label>選擇冥想類型（可多選）</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="meditation-type" value="breathing">
+                                    <span>呼吸冥想</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="meditation-type" value="body-scan">
+                                    <span>身體掃描</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="meditation-type" value="loving-kindness">
+                                    <span>慈心冥想</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="meditation-type" value="mindfulness">
+                                    <span>正念冥想</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="meditation-type" value="transcendental">
+                                    <span>超覺冥想</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="meditation-type" value="other">
+                                    <span>其他</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 情緒狀態 -->
+                    <div class="form-section">
+                        <h3>情緒狀態</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="before-mood">冥想前心情</label>
+                                <select id="before-mood" name="before-mood" required>
+                                    <option value="">請選擇...</option>
+                                    <option value="very-stressed">非常緊張</option>
+                                    <option value="stressed">緊張</option>
+                                    <option value="neutral">平靜</option>
+                                    <option value="calm">放鬆</option>
+                                    <option value="very-calm">非常放鬆</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="after-mood">冥想後心情</label>
+                                <select id="after-mood" name="after-mood" required>
+                                    <option value="">請選擇...</option>
+                                    <option value="very-stressed">非常緊張</option>
+                                    <option value="stressed">緊張</option>
+                                    <option value="neutral">平靜</option>
+                                    <option value="calm">放鬆</option>
+                                    <option value="very-calm">非常放鬆</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 覺察體驗 -->
+                    <div class="form-section">
+                        <h3>覺察體驗</h3>
+                        <div class="form-group">
+                            <label for="physical-sensations">身體感受</label>
+                            <textarea id="physical-sensations" name="physical-sensations" 
+                                placeholder="描述身體的感受，如：放鬆、緊繃、溫暖、涼爽等..." rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="thoughts">思緒觀察</label>
+                            <textarea id="thoughts" name="thoughts" 
+                                placeholder="觀察到的思緒，如：思緒是否平靜、有特定想法浮現等..." rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="emotions">情緒覺察</label>
+                            <textarea id="emotions" name="emotions" 
+                                placeholder="覺察到的情緒，如：喜悅、平靜、焦慮、感恩等..." rows="3"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- 挑戰與突破 -->
+                    <div class="form-section">
+                        <h3>挑戰與突破</h3>
+                        <div class="form-group">
+                            <label for="challenges">遇到的挑戰</label>
+                            <textarea id="challenges" name="challenges" 
+                                placeholder="描述冥想過程中遇到的困難，如：分心、身體不適、時間感等..." rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="insights">洞察與領悟</label>
+                            <textarea id="insights" name="insights" 
+                                placeholder="記錄任何新的洞察、領悟或理解..." rows="3"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- 感恩與意圖 -->
+                    <div class="form-section">
+                        <h3>感恩與意圖</h3>
+                        <div class="form-group">
+                            <label for="gratitude">今日感恩</label>
+                            <textarea id="gratitude" name="gratitude" 
+                                placeholder="記錄想要感恩的人、事、物..." rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="intention">明日意圖</label>
+                            <textarea id="intention" name="intention" 
+                                placeholder="設定明天的正念意圖或目標..." rows="3"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- 評分 -->
+                    <div class="form-section">
+                        <h3>體驗評分</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="focus-rating">專注度 (1-10)</label>
+                                <input type="range" id="focus-rating" name="focus-rating" min="1" max="10" value="5">
+                                <span class="rating-value">5</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="peace-rating">平靜度 (1-10)</label>
+                                <input type="range" id="peace-rating" name="peace-rating" min="1" max="10" value="5">
+                                <span class="rating-value">5</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 提交按鈕 -->
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">保存覺察記錄</button>
+                        <button type="button" class="btn btn-secondary" onclick="resetForm()">重新開始</button>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <!-- 頁腳 -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 正念覺察筆記. 與內在對話的寧靜空間.</p>
+        </div>
+    </footer>
+
+    <script src="./js/main.js"></script>
+</body>
+</html>
