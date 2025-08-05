@@ -2051,3 +2051,553 @@ body {
         font-size: 0.85rem;
     }
 }
+
+/* 今日提醒小部件樣式 */
+.today-widget-section {
+    margin: var(--spacing-xl) 0;
+}
+
+.today-widget {
+    background: var(--card-background);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--border-color);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.today-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.today-header h3 {
+    color: var(--text-color);
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.today-date {
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+.today-content {
+    display: grid;
+    gap: var(--spacing-lg);
+}
+
+/* 名言區域 */
+.quote-section {
+    display: flex;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    background: linear-gradient(135deg, rgba(127, 176, 105, 0.1), rgba(168, 213, 186, 0.1));
+    border-radius: var(--border-radius);
+    border-left: 4px solid var(--primary-color);
+}
+
+.quote-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+    margin-top: var(--spacing-xs);
+}
+
+.quote-text p {
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--text-color);
+    margin: 0 0 var(--spacing-xs) 0;
+    line-height: 1.6;
+}
+
+.quote-author {
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+/* 連續天數區域 */
+.streak-section {
+    background: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-md);
+}
+
+.streak-info {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: var(--spacing-sm);
+}
+
+.streak-current,
+.streak-longest {
+    text-align: center;
+}
+
+.streak-number {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    line-height: 1;
+}
+
+.streak-label {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin-top: var(--spacing-xs);
+}
+
+.streak-encouragement {
+    text-align: center;
+    color: var(--success-color);
+    font-weight: 500;
+    font-size: 0.9rem;
+    margin-top: var(--spacing-sm);
+}
+
+/* 目標區域 */
+.goal-section {
+    background: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-md);
+}
+
+.goal-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-sm);
+}
+
+.goal-icon {
+    font-size: 1.2rem;
+}
+
+.goal-title {
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.goal-progress {
+    margin-bottom: var(--spacing-sm);
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: var(--border-color);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: var(--spacing-xs);
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.progress-text {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    text-align: center;
+}
+
+.goal-complete {
+    text-align: center;
+    color: var(--success-color);
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+/* 成就區域 */
+.achievement-section {
+    background: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-md);
+}
+
+.achievement-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-sm);
+}
+
+.achievement-icon {
+    font-size: 1.2rem;
+}
+
+.achievement-title {
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.recent-achievements {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.achievement-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm);
+    background: rgba(127, 176, 105, 0.05);
+    border-radius: var(--border-radius);
+}
+
+.achievement-item .achievement-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.achievement-info {
+    flex: 1;
+}
+
+.achievement-name {
+    display: block;
+    font-weight: 600;
+    color: var(--text-color);
+    font-size: 0.9rem;
+}
+
+.achievement-desc {
+    display: block;
+    color: var(--text-light);
+    font-size: 0.8rem;
+    margin-top: 2px;
+}
+
+.no-achievements {
+    text-align: center;
+    color: var(--text-light);
+    font-style: italic;
+    padding: var(--spacing-md);
+}
+
+/* 今日操作按鈕 */
+.today-actions {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+}
+
+/* 冥想提醒樣式 */
+.meditation-reminder {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-md);
+    box-shadow: var(--shadow-lg);
+    z-index: 10000;
+    animation: slideIn 0.3s ease;
+    max-width: 350px;
+    border-left: 4px solid var(--primary-color);
+}
+
+.reminder-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.reminder-icon {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: var(--spacing-xs);
+}
+
+.reminder-text h4 {
+    color: var(--text-color);
+    margin: 0 0 var(--spacing-xs) 0;
+    font-size: 1.1rem;
+}
+
+.reminder-text p {
+    color: var(--text-light);
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.reminder-actions {
+    display: flex;
+    gap: var(--spacing-xs);
+    margin-top: var(--spacing-sm);
+}
+
+/* 成就通知樣式 */
+.achievement-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-md);
+    box-shadow: var(--shadow-lg);
+    z-index: 10001;
+    animation: slideIn 0.3s ease;
+    max-width: 300px;
+}
+
+.achievement-content {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.achievement-icon-large {
+    font-size: 3rem;
+    flex-shrink: 0;
+}
+
+.achievement-text h4 {
+    margin: 0 0 var(--spacing-xs) 0;
+    font-size: 1rem;
+}
+
+.achievement-text .achievement-name {
+    font-weight: 600;
+    margin: 0 0 var(--spacing-xs) 0;
+    font-size: 0.9rem;
+}
+
+.achievement-text .achievement-desc {
+    margin: 0;
+    font-size: 0.8rem;
+    opacity: 0.9;
+}
+
+/* 設置模態框樣式 */
+.settings-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10002;
+}
+
+.settings-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-md);
+}
+
+.settings-content {
+    background: var(--card-background);
+    border-radius: var(--border-radius-lg);
+    max-width: 500px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: var(--shadow-lg);
+}
+
+.settings-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-lg);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.settings-header h3 {
+    margin: 0;
+    color: var(--text-color);
+    font-size: 1.3rem;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--text-light);
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: var(--transition-fast);
+}
+
+.close-btn:hover {
+    background: var(--border-color);
+    color: var(--text-color);
+}
+
+.settings-body {
+    padding: var(--spacing-lg);
+}
+
+.setting-group {
+    margin-bottom: var(--spacing-lg);
+}
+
+.setting-group label {
+    display: block;
+    margin-bottom: var(--spacing-xs);
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.setting-group input[type="time"],
+.setting-group input[type="number"],
+.setting-group textarea {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-size: 0.9rem;
+    transition: var(--transition-fast);
+}
+
+.setting-group input:focus,
+.setting-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(127, 176, 105, 0.1);
+}
+
+.setting-label {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    cursor: pointer;
+}
+
+.setting-label input[type="checkbox"] {
+    width: auto;
+    margin: 0;
+}
+
+.setting-text {
+    font-weight: normal;
+}
+
+.day-selector {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-xs);
+}
+
+.day-selector label {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-weight: normal;
+    cursor: pointer;
+    padding: var(--spacing-xs);
+    border-radius: var(--border-radius);
+    transition: var(--transition-fast);
+}
+
+.day-selector label:hover {
+    background: rgba(127, 176, 105, 0.1);
+}
+
+.day-selector input[type="checkbox"] {
+    width: auto;
+    margin: 0;
+}
+
+.settings-footer {
+    padding: var(--spacing-lg);
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: flex-end;
+}
+
+/* 響應式調整 */
+@media (max-width: 768px) {
+    .today-widget {
+        margin: 0 var(--spacing-sm);
+    }
+    
+    .today-header {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+        text-align: center;
+    }
+    
+    .streak-info {
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+    
+    .today-actions {
+        flex-direction: column;
+    }
+    
+    .quote-section {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .achievement-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .settings-content {
+        margin: var(--spacing-sm);
+        max-height: calc(100vh - 2rem);
+    }
+    
+    .day-selector {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .today-widget {
+        padding: var(--spacing-md);
+    }
+    
+    .quote-text p {
+        font-size: 1rem;
+    }
+    
+    .streak-number {
+        font-size: 1.5rem;
+    }
+    
+    .achievement-icon-large {
+        font-size: 2rem;
+    }
+    
+    .day-selector {
+        grid-template-columns: 1fr;
+    }
+}
