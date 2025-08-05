@@ -62,7 +62,7 @@
             <!-- 頁面標題 -->
             <header class="page-header">
                 <h2>統計分析</h2>
-                <p>透過數據了解您的正念覺察旅程</p>
+                <p>透過數據了解您的正念覺察旅程，發現內在的成長軌跡</p>
             </header>
 
             <!-- 時間範圍選擇 -->
@@ -74,143 +74,246 @@
                         <option value="30" selected>最近30天</option>
                         <option value="90">最近3個月</option>
                         <option value="365">最近一年</option>
-                        <option value="custom">自訂範圍</option>
+                        <option value="all">全部記錄</option>
                     </select>
-                    <button class="btn btn-primary" onclick="updateCharts()">更新圖表</button>
+                    <button class="btn btn-primary" onclick="updateAllCharts()">
+                        <span class="btn-icon">🔄</span>
+                        <span class="btn-text">更新圖表</span>
+                    </button>
                 </div>
             </section>
 
-            <!-- 概覽統計 -->
+            <!-- 概覽統計卡片 -->
             <section class="overview-stats">
-                <h3>概覽統計</h3>
+                <h3>📊 概覽統計</h3>
                 <div class="stats-grid">
                     <div class="stat-card">
                         <div class="stat-icon">📅</div>
                         <div class="stat-content">
                             <h4>總冥想次數</h4>
-                            <p class="stat-number">24</p>
-                            <p class="stat-change positive">+3 本週</p>
+                            <p class="stat-number" id="totalSessions">0</p>
+                            <p class="stat-change" id="sessionsChange">本週 +0</p>
                         </div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-icon">⏱️</div>
                         <div class="stat-content">
                             <h4>總冥想時長</h4>
-                            <p class="stat-number">8.5 小時</p>
-                            <p class="stat-change positive">+1.2 小時 本週</p>
+                            <p class="stat-number" id="totalDuration">0 小時</p>
+                            <p class="stat-change" id="durationChange">本週 +0 小時</p>
                         </div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon">📊</div>
+                        <div class="stat-icon">🔥</div>
                         <div class="stat-content">
-                            <h4>平均平靜度</h4>
-                            <p class="stat-number">7.2/10</p>
-                            <p class="stat-change positive">+0.5 本週</p>
+                            <h4>連續冥想天數</h4>
+                            <p class="stat-number" id="streakDays">0 天</p>
+                            <p class="stat-change" id="streakChange">最長 0 天</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📈</div>
+                        <div class="stat-content">
+                            <h4>平均情緒改善</h4>
+                            <p class="stat-number" id="avgMoodImprovement">0</p>
+                            <p class="stat-change" id="moodChange">較上期 +0</p>
                         </div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-icon">🎯</div>
                         <div class="stat-content">
-                            <h4>平均專注度</h4>
-                            <p class="stat-number">6.8/10</p>
-                            <p class="stat-change neutral">+0.2 本週</p>
+                            <h4>本月冥想時數</h4>
+                            <p class="stat-number" id="monthlyHours">0 小時</p>
+                            <p class="stat-change" id="monthlyChange">目標 20 小時</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🌟</div>
+                        <div class="stat-content">
+                            <h4>最常用冥想類型</h4>
+                            <p class="stat-number" id="favoriteType">-</p>
+                            <p class="stat-change" id="typeChange">使用 0 次</p>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- 情緒趨勢圖表 -->
-            <section class="charts-section">
+            <!-- 情緒變化趨勢圖 -->
+            <section class="mood-trend-section">
                 <div class="chart-container">
-                    <h3>情緒變化趨勢</h3>
+                    <h3>😌 情緒變化趨勢（最近30天）</h3>
+                    <p class="chart-description">
+                        觀察您冥想前後的情緒變化，了解正念練習對您內在平靜的影響。
+                        綠色線條代表冥想後的情緒，藍色線條代表冥想前的情緒。
+                    </p>
                     <div class="chart-wrapper">
-                        <canvas id="moodChart" width="800" height="400"></canvas>
+                        <canvas id="moodTrendChart" width="800" height="400"></canvas>
                     </div>
-                    <div class="chart-legend">
-                        <div class="legend-item">
-                            <span class="legend-color very-calm"></span>
-                            <span>非常放鬆</span>
+                    <div class="chart-insights">
+                        <div class="insight-item">
+                            <span class="insight-icon">📊</span>
+                            <span class="insight-text">平均情緒改善：<strong id="trendImprovement">0</strong> 分</span>
                         </div>
-                        <div class="legend-item">
-                            <span class="legend-color calm"></span>
-                            <span>放鬆</span>
+                        <div class="insight-item">
+                            <span class="insight-icon">📈</span>
+                            <span class="insight-text">最佳改善日：<strong id="bestDay">-</strong></span>
                         </div>
-                        <div class="legend-item">
-                            <span class="legend-color neutral"></span>
-                            <span>平靜</span>
-                        </div>
-                        <div class="legend-item">
-                            <span class="legend-color stressed"></span>
-                            <span>緊張</span>
-                        </div>
-                        <div class="legend-item">
-                            <span class="legend-color very-stressed"></span>
-                            <span>非常緊張</span>
+                        <div class="insight-item">
+                            <span class="insight-icon">🎯</span>
+                            <span class="insight-text">建議：<span id="moodSuggestion">繼續保持每日冥想習慣</span></span>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- 冥想類型分析 -->
-            <section class="meditation-analysis">
+            <!-- 冥想時長統計 -->
+            <section class="duration-analysis">
                 <div class="analysis-grid">
                     <div class="analysis-card">
-                        <h3>冥想類型分布</h3>
+                        <h3>⏰ 冥想時長分布</h3>
+                        <p class="chart-description">
+                            了解您偏好的冥想時長，幫助您找到最適合的練習節奏。
+                        </p>
                         <div class="chart-wrapper">
-                            <canvas id="typeChart" width="400" height="300"></canvas>
+                            <canvas id="durationPieChart" width="400" height="300"></canvas>
+                        </div>
+                        <div class="chart-insights">
+                            <div class="insight-item">
+                                <span class="insight-icon">🎯</span>
+                                <span class="insight-text">最常用時長：<strong id="mostUsedDuration">-</strong></span>
+                            </div>
+                            <div class="insight-item">
+                                <span class="insight-icon">📊</span>
+                                <span class="insight-text">平均時長：<strong id="avgDuration">-</strong> 分鐘</span>
+                            </div>
                         </div>
                     </div>
                     <div class="analysis-card">
-                        <h3>每日冥想時長</h3>
+                        <h3>🧘 冥想類型分布</h3>
+                        <p class="chart-description">
+                            探索您最常使用的冥想類型，了解哪些練習方式最適合您。
+                        </p>
                         <div class="chart-wrapper">
-                            <canvas id="durationChart" width="400" height="300"></canvas>
+                            <canvas id="typeBarChart" width="400" height="300"></canvas>
+                        </div>
+                        <div class="chart-insights">
+                            <div class="insight-item">
+                                <span class="insight-icon">⭐</span>
+                                <span class="insight-text">最愛類型：<strong id="favoriteMeditationType">-</strong></span>
+                            </div>
+                            <div class="insight-item">
+                                <span class="insight-icon">🔄</span>
+                                <span class="insight-text">建議嘗試：<strong id="suggestedType">-</strong></span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- 專注度與平靜度對比 -->
-            <section class="rating-comparison">
-                <h3>專注度與平靜度對比</h3>
-                <div class="chart-wrapper">
-                    <canvas id="ratingChart" width="800" height="400"></canvas>
+            <!-- 每週冥想頻率 -->
+            <section class="weekly-frequency-section">
+                <div class="chart-container">
+                    <h3>📅 每週冥想頻率</h3>
+                    <p class="chart-description">
+                        觀察您的冥想習慣模式，了解哪些時段最適合您的正念練習。
+                        這有助於建立更規律的冥想習慣。
+                    </p>
+                    <div class="chart-wrapper">
+                        <canvas id="weeklyFrequencyChart" width="800" height="400"></canvas>
+                    </div>
+                    <div class="chart-insights">
+                        <div class="insight-item">
+                            <span class="insight-icon">📊</span>
+                            <span class="insight-text">最常冥想日：<strong id="mostActiveDay">-</strong></span>
+                        </div>
+                        <div class="insight-item">
+                            <span class="insight-icon">🎯</span>
+                            <span class="insight-text">建議：<span id="frequencySuggestion">保持每日冥想習慣</span></span>
+                        </div>
+                    </div>
                 </div>
             </section>
 
-            <!-- 洞察與建議 -->
-            <section class="insights-section">
-                <h3>洞察與建議</h3>
+            <!-- 思緒類型分析 -->
+            <section class="thought-analysis-section">
+                <div class="chart-container">
+                    <h3>💭 觀察到的思緒類型</h3>
+                    <p class="chart-description">
+                        了解您在冥想過程中觀察到的思緒模式，這有助於您更好地理解自己的內心世界。
+                    </p>
+                    <div class="chart-wrapper">
+                        <canvas id="thoughtTypeChart" width="800" height="400"></canvas>
+                    </div>
+                    <div class="chart-insights">
+                        <div class="insight-item">
+                            <span class="insight-icon">🧠</span>
+                            <span class="insight-text">最常見思緒：<strong id="mostCommonThought">-</strong></span>
+                        </div>
+                        <div class="insight-item">
+                            <span class="insight-icon">💡</span>
+                            <span class="insight-text">洞察：<span id="thoughtInsight">觀察思緒而不評判是正念的核心</span></span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 個人洞察與建議 -->
+            <section class="personal-insights-section">
+                <h3>💡 個人洞察與建議</h3>
                 <div class="insights-grid">
                     <div class="insight-card">
                         <div class="insight-icon">🌅</div>
                         <h4>最佳冥想時段</h4>
-                        <p>根據您的數據，早晨8-9點是您最平靜的冥想時段，建議保持這個習慣。</p>
+                        <p id="bestTimeInsight">根據您的數據分析，建議在早晨進行冥想練習，此時心境最為平靜。</p>
                     </div>
                     <div class="insight-card">
                         <div class="insight-icon">📈</div>
                         <h4>進步趨勢</h4>
-                        <p>您的平靜度在過去30天有穩定提升，顯示正念練習正在發揮效果。</p>
+                        <p id="progressInsight">您的正念練習正在穩步提升，情緒管理能力有明顯改善。</p>
                     </div>
                     <div class="insight-card">
                         <div class="insight-icon">🎯</div>
                         <h4>專注度建議</h4>
-                        <p>專注度還有提升空間，建議嘗試更短的冥想時段或不同的冥想類型。</p>
+                        <p id="focusInsight">建議嘗試不同的冥想類型，找到最適合您的練習方式。</p>
                     </div>
                     <div class="insight-card">
-                        <div class="insight-icon">💡</div>
+                        <div class="insight-icon">💝</div>
                         <h4>一致性提醒</h4>
-                        <p>保持每日冥想的習慣比時長更重要，建議設定固定的冥想時間。</p>
+                        <p id="consistencyInsight">保持每日冥想的習慣比時長更重要，建議設定固定的冥想時間。</p>
+                    </div>
+                    <div class="insight-card">
+                        <div class="insight-icon">🌟</div>
+                        <h4>成就里程碑</h4>
+                        <p id="achievementInsight">恭喜您已經建立了穩定的正念練習習慣！</p>
+                    </div>
+                    <div class="insight-card">
+                        <div class="insight-icon">🔄</div>
+                        <h4>下一步建議</h4>
+                        <p id="nextStepInsight">考慮增加冥想時長或嘗試新的冥想技巧來深化練習。</p>
                     </div>
                 </div>
             </section>
 
-            <!-- 下載報告 -->
+            <!-- 數據匯出 -->
             <section class="export-section">
-                <h3>匯出報告</h3>
+                <h3>📤 匯出與分享</h3>
                 <div class="export-options">
-                    <button class="btn btn-primary" onclick="exportPDF()">下載 PDF 報告</button>
-                    <button class="btn btn-secondary" onclick="exportCSV()">下載 CSV 數據</button>
-                    <button class="btn btn-secondary" onclick="shareReport()">分享報告</button>
+                    <button class="btn btn-primary" onclick="exportPDF()">
+                        <span class="btn-icon">📄</span>
+                        <span class="btn-text">下載 PDF 報告</span>
+                    </button>
+                    <button class="btn btn-secondary" onclick="exportCSV()">
+                        <span class="btn-icon">📊</span>
+                        <span class="btn-text">下載 CSV 數據</span>
+                    </button>
+                    <button class="btn btn-secondary" onclick="shareReport()">
+                        <span class="btn-icon">📤</span>
+                        <span class="btn-text">分享報告</span>
+                    </button>
+                    <button class="btn btn-secondary" onclick="resetData()">
+                        <span class="btn-icon">🗑️</span>
+                        <span class="btn-text">清除所有數據</span>
+                    </button>
                 </div>
             </section>
         </div>
@@ -226,6 +329,6 @@
     <!-- Chart.js 圖表庫 -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="./js/main.js"></script>
-    <script src="./js/charts.js"></script>
+    <script src="./js/stats.js"></script>
 </body>
 </html>
