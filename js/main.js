@@ -668,30 +668,6 @@ function showMessage(message, type = 'info') {
     messageDiv.className = `message-toast message-${type}`;
     messageDiv.textContent = message;
     
-    // 添加樣式
-    messageDiv.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        padding: 12px 20px;
-        border-radius: 8px;
-        color: white;
-        font-weight: 500;
-        z-index: 10000;
-        animation: slideIn 0.3s ease;
-        max-width: 300px;
-        word-wrap: break-word;
-    `;
-    
-    // 根據類型設定背景色
-    if (type === 'success') {
-        messageDiv.style.backgroundColor = '#7FB069';
-    } else if (type === 'error') {
-        messageDiv.style.backgroundColor = '#F56C6C';
-    } else {
-        messageDiv.style.backgroundColor = '#8B7355';
-    }
-    
     // 添加到頁面
     document.body.appendChild(messageDiv);
     

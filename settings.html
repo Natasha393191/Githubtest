@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>設定 - 正念覺察筆記</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 響應式導航系統 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <!-- Logo區域 -->
+            <div class="nav-logo">
+                <a href="index.html" class="logo-link">
+                    <span class="logo-icon">🧘</span>
+                    <span class="logo-text">正念覺察</span>
+                </a>
+            </div>
+
+            <!-- 主要導航選單 -->
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">
+                        <span class="nav-icon">🏠</span>
+                        <span class="nav-text">首頁</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="journal.html" class="nav-link">
+                        <span class="nav-icon">📝</span>
+                        <span class="nav-text">記錄冥想</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="history.html" class="nav-link">
+                        <span class="nav-icon">📚</span>
+                        <span class="nav-text">歷史回顧</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="stats.html" class="nav-link">
+                        <span class="nav-icon">📊</span>
+                        <span class="nav-text">統計分析</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="settings.html" class="nav-link active">
+                        <span class="nav-icon">⚙️</span>
+                        <span class="nav-text">設定</span>
+                    </a>
+                </li>
+            </ul>
+
+            <!-- 漢堡選單按鈕 -->
+            <button class="hamburger" id="hamburger" aria-label="開啟選單">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- 主要內容區域 -->
+    <main class="main-content">
+        <div class="container">
+            <!-- 頁面標題 -->
+            <header class="page-header">
+                <h2>設定</h2>
+                <p>管理您的正念覺察筆記設定和數據</p>
+            </header>
+
+            <!-- 數據統計概覽 -->
+            <section class="data-overview-section">
+                <div class="overview-card">
+                    <h3>📊 數據概覽</h3>
+                    <div class="overview-grid">
+                        <div class="overview-item">
+                            <span class="overview-icon">📝</span>
+                            <div class="overview-content">
+                                <span class="overview-label">冥想記錄</span>
+                                <span class="overview-value" id="totalEntries">0</span>
+                            </div>
+                        </div>
+                        <div class="overview-item">
+                            <span class="overview-icon">⏱️</span>
+                            <div class="overview-content">
+                                <span class="overview-label">總冥想時數</span>
+                                <span class="overview-value" id="totalHours">0</span>
+                            </div>
+                        </div>
+                        <div class="overview-item">
+                            <span class="overview-icon">🏆</span>
+                            <div class="overview-content">
+                                <span class="overview-label">成就徽章</span>
+                                <span class="overview-value" id="unlockedAchievements">0</span>
+                                <span class="overview-sub">/ <span id="totalAchievements">0</span></span>
+                            </div>
+                        </div>
+                        <div class="overview-item">
+                            <span class="overview-icon">💾</span>
+                            <div class="overview-content">
+                                <span class="overview-label">數據大小</span>
+                                <span class="overview-value" id="dataSize">0 B</span>
+                            </div>
+                        </div>
+                        <div class="overview-item">
+                            <span class="overview-icon">🕒</span>
+                            <div class="overview-content">
+                                <span class="overview-label">最後備份</span>
+                                <span class="overview-value" id="lastBackup">從未備份</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 數據管理 -->
+            <section class="data-management-section">
+                <div class="management-card">
+                    <h3>💾 數據管理</h3>
+                    <p class="section-description">
+                        管理您的冥想記錄和設定數據，包括備份、匯出和匯入功能。
+                    </p>
+                    
+                    <div class="management-actions">
+                        <div class="action-group">
+                            <h4>📤 匯出數據</h4>
+                            <p>將您的數據備份到本地文件</p>
+                            <div class="action-buttons">
+                                <button class="btn btn-primary" id="exportJson">
+                                    <span class="btn-icon">📄</span>
+                                    <span class="btn-text">匯出為 JSON</span>
+                                </button>
+                                <button class="btn btn-secondary" id="exportCsv">
+                                    <span class="btn-icon">📊</span>
+                                    <span class="btn-text">匯出為 CSV</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="action-group">
+                            <h4>📥 匯入數據</h4>
+                            <p>從備份文件恢復您的數據</p>
+                            <div class="action-buttons">
+                                <button class="btn btn-primary" id="importData">
+                                    <span class="btn-icon">📂</span>
+                                    <span class="btn-text">匯入備份</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="action-group">
+                            <h4>🗑️ 清除數據</h4>
+                            <p>永久刪除所有數據（需要二次確認）</p>
+                            <div class="action-buttons">
+                                <button class="btn btn-danger" id="clearData">
+                                    <span class="btn-icon">⚠️</span>
+                                    <span class="btn-text">清除所有數據</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 提醒設定 -->
+            <section class="reminder-settings-section">
+                <div class="settings-card">
+                    <h3>⏰ 提醒設定</h3>
+                    <p class="section-description">
+                        設定每日冥想提醒，幫助您建立穩定的正念練習習慣。
+                    </p>
+                    
+                    <div class="settings-form">
+                        <div class="setting-group">
+                            <label class="setting-label">
+                                <input type="checkbox" id="reminderEnabled">
+                                <span class="setting-text">啟用每日冥想提醒</span>
+                            </label>
+                        </div>
+                        
+                        <div class="setting-group">
+                            <label for="reminderTime">提醒時間：</label>
+                            <input type="time" id="reminderTime" value="08:00">
+                        </div>
+                        
+                        <div class="setting-group">
+                            <label>提醒日期：</label>
+                            <div class="day-selector">
+                                <label><input type="checkbox" value="1" checked> 週一</label>
+                                <label><input type="checkbox" value="2" checked> 週二</label>
+                                <label><input type="checkbox" value="3" checked> 週三</label>
+                                <label><input type="checkbox" value="4" checked> 週四</label>
+                                <label><input type="checkbox" value="5" checked> 週五</label>
+                                <label><input type="checkbox" value="6" checked> 週六</label>
+                                <label><input type="checkbox" value="0" checked> 週日</label>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-group">
+                            <label for="reminderMessage">提醒訊息：</label>
+                            <textarea id="reminderMessage" rows="3">該是時候進行正念冥想了，給自己一些寧靜的時光。</textarea>
+                        </div>
+                        
+                        <div class="setting-group">
+                            <label class="setting-label">
+                                <input type="checkbox" id="notificationEnabled">
+                                <span class="setting-text">啟用瀏覽器通知</span>
+                            </label>
+                            <button class="btn btn-small" id="requestNotification" style="display: none;">請求通知權限</button>
+                        </div>
+                        
+                        <div class="setting-group">
+                            <label for="weeklyGoal">每週目標時數：</label>
+                            <input type="number" id="weeklyGoal" value="5" min="1" max="50" step="0.5">
+                        </div>
+                        
+                        <div class="settings-actions">
+                            <button class="btn btn-primary" id="saveReminderSettings">
+                                <span class="btn-icon">💾</span>
+                                <span class="btn-text">保存設定</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 應用程式設定 -->
+            <section class="app-settings-section">
+                <div class="settings-card">
+                    <h3>🔧 應用程式設定</h3>
+                    <p class="section-description">
+                        自訂應用程式的顯示和行為設定。
+                    </p>
+                    
+                    <div class="settings-form">
+                        <div class="setting-group">
+                            <label class="setting-label">
+                                <input type="checkbox" id="autoBackup" checked>
+                                <span class="setting-text">自動備份（每週一次）</span>
+                            </label>
+                        </div>
+                        
+                        <div class="setting-group">
+                            <label class="setting-label">
+                                <input type="checkbox" id="showAchievements" checked>
+                                <span class="setting-text">顯示成就通知</span>
+                            </label>
+                        </div>
+                        
+                        <div class="setting-group">
+                            <label class="setting-label">
+                                <input type="checkbox" id="darkMode">
+                                <span class="setting-text">深色模式</span>
+                            </label>
+                        </div>
+                        
+                        <div class="setting-group">
+                            <label class="setting-label">
+                                <input type="checkbox" id="reducedMotion">
+                                <span class="setting-text">減少動畫效果</span>
+                            </label>
+                        </div>
+                        
+                        <div class="settings-actions">
+                            <button class="btn btn-primary" id="saveAppSettings">
+                                <span class="btn-icon">💾</span>
+                                <span class="btn-text">保存設定</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 關於 -->
+            <section class="about-section">
+                <div class="about-card">
+                    <h3>ℹ️ 關於正念覺察筆記</h3>
+                    <div class="about-content">
+                        <div class="about-info">
+                            <p><strong>版本：</strong> 1.0.0</p>
+                            <p><strong>開發者：</strong> 正念覺察團隊</p>
+                            <p><strong>技術：</strong> HTML5, CSS3, JavaScript</p>
+                            <p><strong>數據存儲：</strong> 本地瀏覽器存儲</p>
+                        </div>
+                        
+                        <div class="about-description">
+                            <p>
+                                正念覺察筆記是一個專為正念冥想練習者設計的個人記錄工具。
+                                我們致力於幫助用戶建立穩定的正念練習習慣，通過記錄和反思來深化內在覺察。
+                            </p>
+                            <p>
+                                所有數據都存儲在您的本地設備上，確保您的隱私安全。
+                                我們不會收集或分享您的個人數據。
+                            </p>
+                        </div>
+                        
+                        <div class="about-actions">
+                            <button class="btn btn-secondary" onclick="showPrivacyPolicy()">
+                                <span class="btn-icon">🔒</span>
+                                <span class="btn-text">隱私政策</span>
+                            </button>
+                            <button class="btn btn-secondary" onclick="showTermsOfService()">
+                                <span class="btn-icon">📋</span>
+                                <span class="btn-text">使用條款</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- 頁腳 -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 正念覺察筆記. 與內在對話的寧靜空間.</p>
+        </div>
+    </footer>
+
+    <script src="./js/main.js"></script>
+    <script src="./js/reminders.js"></script>
+    <script src="./js/dataManager.js"></script>
+</body>
+</html>
