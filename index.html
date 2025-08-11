@@ -10,22 +10,34 @@
     <div class="container">
         <!-- Header -->
         <header class="header">
-            <h1>Personal Finance Tracker</h1>
+            <h1 class="app-title">Personal Finance Tracker</h1>
         </header>
 
         <!-- Navigation -->
         <nav class="navigation">
-            <button class="nav-tab active" data-tab="dashboard">Dashboard</button>
-            <button class="nav-tab" data-tab="income">Income</button>
-            <button class="nav-tab" data-tab="expenses">Expenses</button>
-            <button class="nav-tab" data-tab="assets">Assets</button>
-            <button class="nav-tab" data-tab="liabilities">Liabilities</button>
+            <ul class="nav-tabs">
+                <li class="nav-item">
+                    <button class="nav-link active" data-tab="dashboard">Dashboard</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-tab="income">Income</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-tab="expenses">Expenses</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-tab="assets">Assets</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-tab="liabilities">Liabilities</button>
+                </li>
+            </ul>
         </nav>
 
         <!-- Main Content Area -->
         <main class="main-content">
-            <!-- Dashboard Section -->
-            <section id="dashboard" class="content-section active">
+            <!-- Dashboard Tab -->
+            <section id="dashboard" class="tab-content active">
                 <h2>Dashboard</h2>
                 <div class="dashboard-grid">
                     <div class="summary-card">
@@ -37,80 +49,61 @@
                         <p class="amount danger">$0.00</p>
                     </div>
                     <div class="summary-card">
-                        <h3>Net Balance</h3>
-                        <p class="amount">$0.00</p>
+                        <h3>Net Worth</h3>
+                        <p class="amount primary">$0.00</p>
                     </div>
                     <div class="summary-card">
-                        <h3>Total Assets</h3>
-                        <p class="amount primary">$0.00</p>
+                        <h3>Monthly Budget</h3>
+                        <p class="amount">$0.00</p>
                     </div>
                 </div>
                 <div class="recent-transactions">
                     <h3>Recent Transactions</h3>
                     <div class="transaction-list">
-                        <p class="no-data">No transactions yet. Add some income or expenses to get started!</p>
+                        <p class="no-data">No transactions yet. Start by adding income or expenses!</p>
                     </div>
                 </div>
             </section>
 
-            <!-- Income Section -->
-            <section id="income" class="content-section">
+            <!-- Income Tab -->
+            <section id="income" class="tab-content">
                 <h2>Income</h2>
-                <div class="form-container">
-                    <form id="income-form" class="transaction-form">
+                <div class="form-section">
+                    <form class="income-form">
                         <div class="form-group">
-                            <label for="income-description">Description</label>
-                            <input type="text" id="income-description" name="description" required>
+                            <label for="income-source">Income Source</label>
+                            <input type="text" id="income-source" placeholder="e.g., Salary, Freelance">
                         </div>
                         <div class="form-group">
                             <label for="income-amount">Amount</label>
-                            <input type="number" id="income-amount" name="amount" step="0.01" min="0" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="income-category">Category</label>
-                            <select id="income-category" name="category" required>
-                                <option value="">Select Category</option>
-                                <option value="salary">Salary</option>
-                                <option value="freelance">Freelance</option>
-                                <option value="investment">Investment</option>
-                                <option value="business">Business</option>
-                                <option value="other">Other</option>
-                            </select>
+                            <input type="number" id="income-amount" placeholder="0.00" step="0.01">
                         </div>
                         <div class="form-group">
                             <label for="income-date">Date</label>
-                            <input type="date" id="income-date" name="date" required>
+                            <input type="date" id="income-date">
                         </div>
                         <button type="submit" class="btn btn-success">Add Income</button>
                     </form>
                 </div>
-                <div class="income-list">
+                <div class="data-list">
                     <h3>Income History</h3>
-                    <div class="transaction-list">
+                    <div class="income-list">
                         <p class="no-data">No income entries yet.</p>
                     </div>
                 </div>
             </section>
 
-            <!-- Expenses Section -->
-            <section id="expenses" class="content-section">
+            <!-- Expenses Tab -->
+            <section id="expenses" class="tab-content">
                 <h2>Expenses</h2>
-                <div class="form-container">
-                    <form id="expense-form" class="transaction-form">
-                        <div class="form-group">
-                            <label for="expense-description">Description</label>
-                            <input type="text" id="expense-description" name="description" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="expense-amount">Amount</label>
-                            <input type="number" id="expense-amount" name="amount" step="0.01" min="0" required>
-                        </div>
+                <div class="form-section">
+                    <form class="expense-form">
                         <div class="form-group">
                             <label for="expense-category">Category</label>
-                            <select id="expense-category" name="category" required>
+                            <select id="expense-category">
                                 <option value="">Select Category</option>
-                                <option value="food">Food</option>
-                                <option value="transport">Transport</option>
+                                <option value="food">Food & Dining</option>
+                                <option value="transportation">Transportation</option>
                                 <option value="utilities">Utilities</option>
                                 <option value="entertainment">Entertainment</option>
                                 <option value="healthcare">Healthcare</option>
@@ -119,91 +112,98 @@
                             </select>
                         </div>
                         <div class="form-group">
+                            <label for="expense-description">Description</label>
+                            <input type="text" id="expense-description" placeholder="e.g., Grocery shopping">
+                        </div>
+                        <div class="form-group">
+                            <label for="expense-amount">Amount</label>
+                            <input type="number" id="expense-amount" placeholder="0.00" step="0.01">
+                        </div>
+                        <div class="form-group">
                             <label for="expense-date">Date</label>
-                            <input type="date" id="expense-date" name="date" required>
+                            <input type="date" id="expense-date">
                         </div>
                         <button type="submit" class="btn btn-danger">Add Expense</button>
                     </form>
                 </div>
-                <div class="expense-list">
+                <div class="data-list">
                     <h3>Expense History</h3>
-                    <div class="transaction-list">
+                    <div class="expense-list">
                         <p class="no-data">No expense entries yet.</p>
                     </div>
                 </div>
             </section>
 
-            <!-- Assets Section -->
-            <section id="assets" class="content-section">
+            <!-- Assets Tab -->
+            <section id="assets" class="tab-content">
                 <h2>Assets</h2>
-                <div class="form-container">
-                    <form id="asset-form" class="transaction-form">
+                <div class="form-section">
+                    <form class="asset-form">
                         <div class="form-group">
                             <label for="asset-name">Asset Name</label>
-                            <input type="text" id="asset-name" name="name" required>
+                            <input type="text" id="asset-name" placeholder="e.g., Savings Account, Car">
+                        </div>
+                        <div class="form-group">
+                            <label for="asset-type">Asset Type</label>
+                            <select id="asset-type">
+                                <option value="">Select Type</option>
+                                <option value="cash">Cash & Bank Accounts</option>
+                                <option value="investment">Investments</option>
+                                <option value="property">Real Estate</option>
+                                <option value="vehicle">Vehicles</option>
+                                <option value="other">Other</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="asset-value">Current Value</label>
-                            <input type="number" id="asset-value" name="value" step="0.01" min="0" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="asset-category">Category</label>
-                            <select id="asset-category" name="category" required>
-                                <option value="">Select Category</option>
-                                <option value="cash">Cash</option>
-                                <option value="savings">Savings Account</option>
-                                <option value="investment">Investment</option>
-                                <option value="property">Property</option>
-                                <option value="vehicle">Vehicle</option>
-                                <option value="other">Other</option>
-                            </select>
+                            <input type="number" id="asset-value" placeholder="0.00" step="0.01">
                         </div>
                         <button type="submit" class="btn btn-primary">Add Asset</button>
                     </form>
                 </div>
-                <div class="asset-list">
+                <div class="data-list">
                     <h3>Asset Portfolio</h3>
-                    <div class="transaction-list">
-                        <p class="no-data">No assets added yet.</p>
+                    <div class="asset-list">
+                        <p class="no-data">No assets recorded yet.</p>
                     </div>
                 </div>
             </section>
 
-            <!-- Liabilities Section -->
-            <section id="liabilities" class="content-section">
+            <!-- Liabilities Tab -->
+            <section id="liabilities" class="tab-content">
                 <h2>Liabilities</h2>
-                <div class="form-container">
-                    <form id="liability-form" class="transaction-form">
+                <div class="form-section">
+                    <form class="liability-form">
                         <div class="form-group">
                             <label for="liability-name">Liability Name</label>
-                            <input type="text" id="liability-name" name="name" required>
+                            <input type="text" id="liability-name" placeholder="e.g., Credit Card, Mortgage">
                         </div>
                         <div class="form-group">
-                            <label for="liability-amount">Amount Owed</label>
-                            <input type="number" id="liability-amount" name="amount" step="0.01" min="0" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="liability-category">Category</label>
-                            <select id="liability-category" name="category" required>
-                                <option value="">Select Category</option>
+                            <label for="liability-type">Liability Type</label>
+                            <select id="liability-type">
+                                <option value="">Select Type</option>
                                 <option value="credit-card">Credit Card</option>
-                                <option value="loan">Loan</option>
+                                <option value="loan">Personal Loan</option>
                                 <option value="mortgage">Mortgage</option>
                                 <option value="student-loan">Student Loan</option>
                                 <option value="other">Other</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="liability-due">Due Date</label>
-                            <input type="date" id="liability-due" name="due" required>
+                            <label for="liability-amount">Outstanding Amount</label>
+                            <input type="number" id="liability-amount" placeholder="0.00" step="0.01">
+                        </div>
+                        <div class="form-group">
+                            <label for="liability-rate">Interest Rate (%)</label>
+                            <input type="number" id="liability-rate" placeholder="0.00" step="0.01">
                         </div>
                         <button type="submit" class="btn btn-danger">Add Liability</button>
                     </form>
                 </div>
-                <div class="liability-list">
+                <div class="data-list">
                     <h3>Outstanding Liabilities</h3>
-                    <div class="transaction-list">
-                        <p class="no-data">No liabilities added yet.</p>
+                    <div class="liability-list">
+                        <p class="no-data">No liabilities recorded yet.</p>
                     </div>
                 </div>
             </section>
@@ -211,7 +211,7 @@
 
         <!-- Footer -->
         <footer class="footer">
-            <p>Personal Finance Tracker &copy; 2024 | Today: <span id="current-date"></span></p>
+            <p>&copy; 2024 Personal Finance Tracker | Today: <span id="current-date"></span></p>
         </footer>
     </div>
 
