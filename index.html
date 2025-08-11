@@ -1,139 +1,220 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>正念覺察筆記 - 與內在對話的寧靜空間</title>
-    <link rel="stylesheet" href="./css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <title>Personal Finance Tracker</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- 響應式導航系統 -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <!-- Logo區域 -->
-            <div class="nav-logo">
-                <a href="index.html" class="logo-link">
-                    <span class="logo-icon">🧘</span>
-                    <span class="logo-text">正念覺察</span>
-                </a>
-            </div>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1 class="app-title">Personal Finance Tracker</h1>
+        </header>
 
-            <!-- 主要導航選單 -->
-            <ul class="nav-menu" id="navMenu">
+        <!-- Navigation -->
+        <nav class="navigation">
+            <ul class="nav-tabs">
                 <li class="nav-item">
-                    <a href="index.html" class="nav-link active">
-                        <span class="nav-icon">🏠</span>
-                        <span class="nav-text">首頁</span>
-                    </a>
+                    <button class="nav-link active" data-tab="dashboard">Dashboard</button>
                 </li>
                 <li class="nav-item">
-                    <a href="journal.html" class="nav-link">
-                        <span class="nav-icon">📝</span>
-                        <span class="nav-text">記錄冥想</span>
-                    </a>
+                    <button class="nav-link" data-tab="income">Income</button>
                 </li>
                 <li class="nav-item">
-                    <a href="history.html" class="nav-link">
-                        <span class="nav-icon">📚</span>
-                        <span class="nav-text">歷史回顧</span>
-                    </a>
+                    <button class="nav-link" data-tab="expenses">Expenses</button>
                 </li>
                 <li class="nav-item">
-                    <a href="stats.html" class="nav-link">
-                        <span class="nav-icon">📊</span>
-                        <span class="nav-text">統計分析</span>
-                    </a>
+                    <button class="nav-link" data-tab="assets">Assets</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-tab="liabilities">Liabilities</button>
                 </li>
             </ul>
+        </nav>
 
-            <!-- 漢堡選單按鈕 -->
-            <button class="hamburger" id="hamburger" aria-label="開啟選單">
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
-            </button>
-        </div>
-    </nav>
-
-    <!-- 主要內容區域 -->
-    <main class="main-content">
-        <!-- 歡迎區域 -->
-        <section class="hero-section">
-            <div class="hero-content">
-                <h2 class="hero-title">歡迎來到您的正念覺察空間</h2>
-                <p class="hero-subtitle">在這裡，每一刻的覺察都是珍貴的禮物</p>
-                <div class="hero-actions">
-                    <a href="journal.html" class="btn btn-primary">開始今日覺察</a>
-                    <a href="history.html" class="btn btn-secondary">回顧過往記錄</a>
-                </div>
-            </div>
-        </section>
-
-        <!-- 快速記錄區域 -->
-        <section class="quick-journal">
-            <div class="container">
-                <h3>今日覺察速記</h3>
-                <form class="quick-form">
-                    <div class="form-group">
-                        <label for="current-mood">此刻的心情</label>
-                        <select id="current-mood" name="mood">
-                            <option value="">請選擇...</option>
-                            <option value="peaceful">平靜安詳</option>
-                            <option value="grateful">感恩喜悅</option>
-                            <option value="calm">寧靜放鬆</option>
-                            <option value="focused">專注集中</option>
-                            <option value="tired">疲憊</option>
-                            <option value="anxious">焦慮</option>
-                            <option value="sad">悲傷</option>
-                        </select>
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Dashboard Tab -->
+            <section id="dashboard" class="tab-content active">
+                <h2>Dashboard</h2>
+                <div class="dashboard-grid">
+                    <div class="summary-card">
+                        <h3>Total Income</h3>
+                        <p class="amount success">$0.00</p>
                     </div>
-                    <div class="form-group">
-                        <label for="quick-note">快速筆記</label>
-                        <textarea id="quick-note" name="note" placeholder="記錄此刻的想法、感受或覺察..." rows="3"></textarea>
+                    <div class="summary-card">
+                        <h3>Total Expenses</h3>
+                        <p class="amount danger">$0.00</p>
                     </div>
-                    <button type="submit" class="btn btn-primary">保存覺察</button>
-                </form>
-            </div>
-        </section>
-
-        <!-- 功能特色區域 -->
-        <section class="features">
-            <div class="container">
-                <h3>覺察之旅的夥伴</h3>
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <div class="feature-icon">📝</div>
-                        <h4>覺察記錄</h4>
-                        <p>記錄每一次的冥想體驗和內在覺察，建立屬於您的正念日誌</p>
+                    <div class="summary-card">
+                        <h3>Net Worth</h3>
+                        <p class="amount primary">$0.00</p>
                     </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">📊</div>
-                        <h4>情緒追蹤</h4>
-                        <p>透過圖表分析情緒變化趨勢，了解內在世界的波動</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">🕰️</div>
-                        <h4>歷史回顧</h4>
-                        <p>回顧過往的覺察記錄，看見自己的成長軌跡</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">🌱</div>
-                        <h4>正念提醒</h4>
-                        <p>定期提醒您停下來，與內在對話，保持覺察的習慣</p>
+                    <div class="summary-card">
+                        <h3>Monthly Budget</h3>
+                        <p class="amount">$0.00</p>
                     </div>
                 </div>
-            </div>
-        </section>
-    </main>
+                <div class="recent-transactions">
+                    <h3>Recent Transactions</h3>
+                    <div class="transaction-list">
+                        <p class="no-data">No transactions yet. Start by adding income or expenses!</p>
+                    </div>
+                </div>
+            </section>
 
-    <!-- 頁腳 -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2024 正念覺察筆記. 與內在對話的寧靜空間.</p>
-        </div>
-    </footer>
+            <!-- Income Tab -->
+            <section id="income" class="tab-content">
+                <h2>Income</h2>
+                <div class="form-section">
+                    <form class="income-form">
+                        <div class="form-group">
+                            <label for="income-source">Income Source</label>
+                            <input type="text" id="income-source" placeholder="e.g., Salary, Freelance">
+                        </div>
+                        <div class="form-group">
+                            <label for="income-amount">Amount</label>
+                            <input type="number" id="income-amount" placeholder="0.00" step="0.01">
+                        </div>
+                        <div class="form-group">
+                            <label for="income-date">Date</label>
+                            <input type="date" id="income-date">
+                        </div>
+                        <button type="submit" class="btn btn-success">Add Income</button>
+                    </form>
+                </div>
+                <div class="data-list">
+                    <h3>Income History</h3>
+                    <div class="income-list">
+                        <p class="no-data">No income entries yet.</p>
+                    </div>
+                </div>
+            </section>
 
-    <script src="./js/main.js"></script>
+            <!-- Expenses Tab -->
+            <section id="expenses" class="tab-content">
+                <h2>Expenses</h2>
+                <div class="form-section">
+                    <form class="expense-form">
+                        <div class="form-group">
+                            <label for="expense-category">Category</label>
+                            <select id="expense-category">
+                                <option value="">Select Category</option>
+                                <option value="food">Food & Dining</option>
+                                <option value="transportation">Transportation</option>
+                                <option value="utilities">Utilities</option>
+                                <option value="entertainment">Entertainment</option>
+                                <option value="healthcare">Healthcare</option>
+                                <option value="shopping">Shopping</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="expense-description">Description</label>
+                            <input type="text" id="expense-description" placeholder="e.g., Grocery shopping">
+                        </div>
+                        <div class="form-group">
+                            <label for="expense-amount">Amount</label>
+                            <input type="number" id="expense-amount" placeholder="0.00" step="0.01">
+                        </div>
+                        <div class="form-group">
+                            <label for="expense-date">Date</label>
+                            <input type="date" id="expense-date">
+                        </div>
+                        <button type="submit" class="btn btn-danger">Add Expense</button>
+                    </form>
+                </div>
+                <div class="data-list">
+                    <h3>Expense History</h3>
+                    <div class="expense-list">
+                        <p class="no-data">No expense entries yet.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Assets Tab -->
+            <section id="assets" class="tab-content">
+                <h2>Assets</h2>
+                <div class="form-section">
+                    <form class="asset-form">
+                        <div class="form-group">
+                            <label for="asset-name">Asset Name</label>
+                            <input type="text" id="asset-name" placeholder="e.g., Savings Account, Car">
+                        </div>
+                        <div class="form-group">
+                            <label for="asset-type">Asset Type</label>
+                            <select id="asset-type">
+                                <option value="">Select Type</option>
+                                <option value="cash">Cash & Bank Accounts</option>
+                                <option value="investment">Investments</option>
+                                <option value="property">Real Estate</option>
+                                <option value="vehicle">Vehicles</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="asset-value">Current Value</label>
+                            <input type="number" id="asset-value" placeholder="0.00" step="0.01">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add Asset</button>
+                    </form>
+                </div>
+                <div class="data-list">
+                    <h3>Asset Portfolio</h3>
+                    <div class="asset-list">
+                        <p class="no-data">No assets recorded yet.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Liabilities Tab -->
+            <section id="liabilities" class="tab-content">
+                <h2>Liabilities</h2>
+                <div class="form-section">
+                    <form class="liability-form">
+                        <div class="form-group">
+                            <label for="liability-name">Liability Name</label>
+                            <input type="text" id="liability-name" placeholder="e.g., Credit Card, Mortgage">
+                        </div>
+                        <div class="form-group">
+                            <label for="liability-type">Liability Type</label>
+                            <select id="liability-type">
+                                <option value="">Select Type</option>
+                                <option value="credit-card">Credit Card</option>
+                                <option value="loan">Personal Loan</option>
+                                <option value="mortgage">Mortgage</option>
+                                <option value="student-loan">Student Loan</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="liability-amount">Outstanding Amount</label>
+                            <input type="number" id="liability-amount" placeholder="0.00" step="0.01">
+                        </div>
+                        <div class="form-group">
+                            <label for="liability-rate">Interest Rate (%)</label>
+                            <input type="number" id="liability-rate" placeholder="0.00" step="0.01">
+                        </div>
+                        <button type="submit" class="btn btn-danger">Add Liability</button>
+                    </form>
+                </div>
+                <div class="data-list">
+                    <h3>Outstanding Liabilities</h3>
+                    <div class="liability-list">
+                        <p class="no-data">No liabilities recorded yet.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2024 Personal Finance Tracker | Today: <span id="current-date"></span></p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>

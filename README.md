@@ -1,161 +1,172 @@
-# 正念覺察筆記網站
+# Personal Finance Tracker
 
-一個溫暖平靜的正念冥想覺察筆記網站，幫助您記錄和追蹤內在的覺察旅程。
+A modern, responsive web application for tracking personal finances using vanilla HTML, CSS, and JavaScript.
 
-## 🌟 特色功能
+## Features
 
-### 📝 覺察記錄
-- **詳細記錄表單**：包含基本資訊、冥想類型、情緒狀態、覺察體驗等
-- **快速記錄**：首頁提供快速記錄功能，方便即時記錄當下感受
-- **評分系統**：專注度和平靜度的1-10分評分
+- **Dashboard**: Overview of financial health with summary cards showing total income, expenses, net worth, and monthly budget
+- **Income Tracking**: Add and manage income sources with amounts and dates
+- **Expense Management**: Track expenses by category with detailed descriptions
+- **Asset Portfolio**: Record and monitor various types of assets (cash, investments, real estate, vehicles)
+- **Liability Management**: Track debts and liabilities with interest rates
+- **Recent Transactions**: Quick view of the latest financial activities
+- **Local Data Storage**: All data is stored locally in the browser using localStorage
+- **Responsive Design**: Mobile-friendly interface that works on all devices
+- **Modern UI**: Clean, professional design with smooth animations and transitions
 
-### 📊 統計分析
-- **情緒趨勢圖表**：追蹤情緒變化趨勢
-- **冥想類型分布**：了解偏好的冥想方式
-- **時長統計**：每日冥想時長分析
-- **評分對比**：專注度與平靜度的對比分析
-
-### 🕰️ 歷史回顧
-- **記錄列表**：查看所有過往的覺察記錄
-- **搜尋功能**：根據關鍵字搜尋記錄
-- **篩選功能**：按時間、心情、冥想類型篩選
-- **詳情查看**：查看完整的記錄內容
-
-### 💡 洞察建議
-- **個人化建議**：根據數據提供正念練習建議
-- **進步追蹤**：顯示練習趨勢和進步情況
-- **最佳時段**：分析最適合的冥想時段
-
-## 🎨 設計理念
-
-### 溫暖平靜的視覺風格
-- **配色方案**：使用溫暖的棕色系，營造寧靜氛圍
-- **字體選擇**：Noto Sans TC 字體，確保中文顯示效果
-- **圓角設計**：柔和的圓角元素，減少視覺壓力
-- **漸層效果**：溫和的漸層背景，增加視覺層次
-
-### 響應式設計
-- **多設備支援**：適配桌面、平板、手機等各種設備
-- **觸控友善**：按鈕和表單元素適合觸控操作
-- **流暢動畫**：溫和的過渡動畫，提升使用體驗
-
-## 📁 檔案結構
+## File Structure
 
 ```
-正念覺察筆記/
-├── index.html          # 首頁 - 歡迎頁面和快速記錄
-├── journal.html        # 覺察記錄頁面 - 詳細記錄表單
-├── history.html        # 歷史回顧頁面 - 查看過往記錄
-├── stats.html          # 統計分析頁面 - 情緒趨勢圖表
-├── css/
-│   └── style.css       # 主要樣式文件
-├── js/
-│   ├── main.js         # 主要JavaScript功能
-│   └── charts.js       # 圖表相關功能
-└── README.md           # 專案說明文件
+personal-finance-tracker/
+├── index.html          # Main HTML file with complete application structure
+├── styles.css          # CSS with responsive design and modern styling
+├── script.js           # JavaScript for functionality and data management
+└── README.md           # This documentation file
 ```
 
-## 🚀 快速開始
+## Design Features
 
-### 1. 下載專案
+### Color Scheme
+- **Primary Blue**: #3498db (main theme color)
+- **Success Green**: #27ae60 (income, positive values)
+- **Danger Red**: #e74c3c (expenses, liabilities, negative values)
+- **Professional grays and whites** for backgrounds and text
+
+### Layout
+- **Header**: Gradient background with app title
+- **Navigation**: Tab-based navigation with 5 sections
+- **Main Content**: Card-based layout with forms and data displays
+- **Footer**: Shows current date and copyright information
+
+### Responsive Breakpoints
+- **Desktop**: 1200px+ (full layout)
+- **Tablet**: 768px-1199px (adapted grid layouts)
+- **Mobile**: 480px-767px (stacked layouts)
+- **Small Mobile**: <480px (optimized for small screens)
+
+## How to Use
+
+### Getting Started
+1. Open `index.html` in a web browser
+2. Start by adding some income entries in the "Income" tab
+3. Add expenses in the "Expenses" tab
+4. Record your assets in the "Assets" tab
+5. Track any liabilities in the "Liabilities" tab
+6. Monitor your financial overview in the "Dashboard" tab
+
+### Navigation
+- Click on the tab buttons to switch between different sections
+- All data is automatically saved to your browser's local storage
+- The dashboard updates automatically when you add new entries
+
+### Dashboard Overview
+- **Total Income**: Sum of all income entries
+- **Total Expenses**: Sum of all expense entries
+- **Net Worth**: Total assets minus total liabilities
+- **Monthly Budget**: Total income minus total expenses
+- **Recent Transactions**: Latest 5 transactions across income and expenses
+
+### Data Management
+- **Add Entries**: Fill out the forms in each section and click the respective "Add" button
+- **Delete Entries**: Click the "×" button next to any entry to delete it
+- **View History**: All entries are automatically displayed in chronological order
+
+## Browser Compatibility
+
+The application works in all modern browsers including:
+- Chrome 60+
+- Firefox 55+
+- Safari 12+
+- Edge 79+
+
+## Local Storage
+
+All data is stored locally in your browser using localStorage API. This means:
+- ✅ Your data persists between browser sessions
+- ✅ No internet connection required after initial load
+- ✅ Complete privacy - no data sent to external servers
+- ⚠️ Data is specific to the browser and device
+- ⚠️ Clearing browser data will remove all entries
+
+## Technical Details
+
+### Technologies Used
+- **HTML5**: Semantic markup and modern form elements
+- **CSS3**: Flexbox, Grid, animations, and responsive design
+- **Vanilla JavaScript**: ES6+ features, DOM manipulation, localStorage
+
+### Key JavaScript Features
+- **Tab Navigation**: Dynamic content switching
+- **Form Validation**: Client-side validation for all inputs
+- **Data Persistence**: localStorage integration
+- **Real-time Updates**: Dashboard updates automatically
+- **Responsive Notifications**: User feedback for all actions
+- **Delete Functionality**: Confirm dialogs for data safety
+
+### CSS Highlights
+- **CSS Grid**: Dashboard summary cards layout
+- **Flexbox**: Navigation and form layouts
+- **CSS Animations**: Smooth transitions and hover effects
+- **Media Queries**: Responsive design for all screen sizes
+- **CSS Variables**: Consistent color scheme (in dark mode section)
+
+## Future Enhancements
+
+Potential features that could be added:
+- **Data Export/Import**: JSON file backup and restore
+- **Charts and Graphs**: Visual representation of financial data
+- **Budget Categories**: Set spending limits for expense categories
+- **Recurring Transactions**: Automatic income/expense entries
+- **Dark Mode**: Toggle between light and dark themes
+- **Multiple Accounts**: Support for different bank accounts
+- **Currency Support**: Multi-currency tracking
+- **Reports**: Monthly/yearly financial reports
+
+## Customization
+
+### Modifying Colors
+Edit the color values in `styles.css`:
+```css
+/* Primary colors used throughout the app */
+--primary-blue: #3498db;
+--success-green: #27ae60;
+--danger-red: #e74c3c;
+```
+
+### Adding Categories
+Modify the select options in `index.html` for expenses, assets, or liabilities:
+```html
+<option value="new-category">New Category</option>
+```
+
+### Changing Layout
+The CSS uses modern flexbox and grid layouts that can be easily modified:
+- Dashboard grid: `.dashboard-grid`
+- Form layouts: `.form-section`
+- Navigation: `.navigation`
+
+## License
+
+This project is open source and available under the MIT License.
+
+## Support
+
+This is a client-side application that doesn't require a server. If you encounter issues:
+1. Check that JavaScript is enabled in your browser
+2. Ensure you're viewing the file via HTTP (not file://)
+3. Check browser console for any error messages
+4. Try clearing localStorage if data appears corrupted
+
+For development, you can serve the files using any HTTP server:
 ```bash
-git clone [專案網址]
-cd 正念覺察筆記
+# Python 3
+python -m http.server 8000
+
+# Node.js
+npx serve .
+
+# PHP
+php -S localhost:8000
 ```
 
-### 2. 開啟網站
-直接在瀏覽器中開啟 `index.html` 即可開始使用。
-
-### 3. 開始記錄
-- 點擊「開始今日覺察」進入詳細記錄頁面
-- 或使用首頁的快速記錄功能
-- 在歷史回顧頁面查看過往記錄
-- 在統計分析頁面查看數據趨勢
-
-## 💻 技術實現
-
-### 前端技術
-- **HTML5**：語意化標籤，良好的SEO和無障礙支援
-- **CSS3**：現代CSS特性，包含Grid、Flexbox、CSS變數
-- **JavaScript ES6+**：模組化程式碼，現代JavaScript語法
-- **Chart.js**：專業的圖表庫，用於數據視覺化
-
-### 主要功能
-- **表單處理**：完整的表單驗證和數據處理
-- **本地儲存**：使用localStorage保存用戶數據
-- **圖表展示**：多種圖表類型展示統計數據
-- **響應式設計**：適配各種螢幕尺寸
-
-## 📱 使用指南
-
-### 記錄覺察
-1. 進入「記錄覺察」頁面
-2. 填寫基本資訊（日期、時間、時長）
-3. 選擇冥想類型（可多選）
-4. 記錄冥想前後的心情狀態
-5. 詳細描述覺察體驗
-6. 記錄遇到的挑戰和洞察
-7. 填寫感恩和明日意圖
-8. 評分專注度和平靜度
-9. 點擊「保存覺察記錄」
-
-### 查看統計
-1. 進入「統計分析」頁面
-2. 選擇時間範圍
-3. 查看概覽統計數據
-4. 分析情緒變化趨勢
-5. 了解冥想類型分布
-6. 查看專注度與平靜度對比
-7. 閱讀個人化建議
-
-### 歷史回顧
-1. 進入「歷史回顧」頁面
-2. 使用搜尋功能找到特定記錄
-3. 使用篩選功能按條件查看
-4. 點擊「查看詳情」閱讀完整記錄
-5. 點擊「編輯」修改記錄內容
-
-## 🎯 未來規劃
-
-### 功能擴展
-- [ ] 用戶帳戶系統
-- [ ] 雲端同步功能
-- [ ] 冥想提醒功能
-- [ ] 社群分享功能
-- [ ] 冥想音頻整合
-- [ ] 多語言支援
-
-### 技術改進
-- [ ] 後端API整合
-- [ ] 資料庫儲存
-- [ ] PWA支援
-- [ ] 離線功能
-- [ ] 性能優化
-
-## 🤝 貢獻指南
-
-歡迎提交Issue和Pull Request來改進這個專案！
-
-### 開發環境
-1. Fork 專案
-2. 創建功能分支
-3. 提交變更
-4. 發起Pull Request
-
-### 程式碼規範
-- 使用語意化的HTML標籤
-- 遵循CSS命名規範
-- 使用ES6+ JavaScript語法
-- 添加適當的註釋
-
-## 📄 授權條款
-
-本專案採用 MIT 授權條款 - 詳見 [LICENSE](LICENSE) 文件
-
-## 🙏 致謝
-
-感謝所有正念冥想的老師和實踐者，是你們的智慧啟發了這個專案的誕生。
-
----
-
-**願每個人都能在正念覺察中找到內在的寧靜與智慧。** 🧘‍♀️✨
+Then navigate to `http://localhost:8000` in your browser.
