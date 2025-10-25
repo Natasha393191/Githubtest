@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CW Money - 記帳App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #D4A574, #C89660);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 375px;
+            margin: 0 auto;
+            background: #f5f5f5;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #D4A574, #C89660);
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .logo {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* Sleep reminder */
+        .sleep-reminder {
+            background: #1e3a8a;
+            color: white;
+            padding: 8px 15px;
+            margin: 10px 20px;
+            border-radius: 20px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .moon-icon {
+            width: 20px;
+            height: 20px;
+            background: #fbbf24;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        /* Calendar Header */
+        .calendar-header {
+            padding: 20px;
+            text-align: center;
+            background: white;
+        }
+
+        .month-year {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .calendar-icon {
+            width: 24px;
+            height: 24px;
+            border: 2px solid #666;
+            border-radius: 4px;
+        }
+
+        /* Calendar */
+        .calendar {
+            background: white;
+            padding: 0 20px 20px;
+        }
+
+        .weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+
+        .weekday {
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+            padding: 10px 0;
+        }
+
+        .dates {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+
+        .date {
+            text-align: center;
+            padding: 12px 0;
+            font-size: 18px;
+            font-weight: bold;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .date.today {
+            background: #D4A574;
+            color: white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+        }
+
+        .date.has-record::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 4px;
+            background: #D4A574;
+            border-radius: 50%;
+        }
+
+        /* Statistics */
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            background: white;
+            margin-bottom: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+            flex: 1;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .stat-value.income {
+            color: #3b82f6;
+        }
+
+        .stat-value.expense {
+            color: #ef4444;
+        }
+
+        .stat-value.budget {
+            color: #333;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            padding: 0 20px;
+            margin-bottom: 30px;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 15px;
+            border-radius: 15px;
+            border: none;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .record-btn {
+            background: linear-gradient(135deg, #D4A574, #C89660);
+            color: white;
+            flex: 2;
+        }
+
+        .account-btn {
+            background: rgba(212, 165, 116, 0.2);
+            color: #8B4513;
+        }
+
+        .coin-icon {
+            width: 24px;
+            height: 24px;
+            background: #fbbf24;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        /* Summary Cards */
+        .summary-cards {
+            padding: 0 20px;
+        }
+
+        .summary-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .summary-left {
+            flex: 1;
+        }
+
+        .summary-title {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .summary-date {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .summary-amounts {
+            text-align: right;
+        }
+
+        .summary-expense {
+            color: #ef4444;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 2px;
+        }
+
+        .summary-income {
+            color: #3b82f6;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 375px;
+            background: linear-gradient(135deg, #D4A574, #C89660);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: white;
+            text-decoration: none;
+            font-size: 12px;
+            padding: 5px;
+        }
+
+        .nav-icon {
+            width: 24px;
+            height: 24px;
+            margin-bottom: 5px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+        }
+
+        .home-indicator {
+            position: fixed;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 134px;
+            height: 5px;
+            background: #000;
+            border-radius: 3px;
+        }
+
+        /* Modal for adding record */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 375px;
+            background: white;
+            border-radius: 20px 20px 0 0;
+            padding: 20px;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            background: white;
+        }
+
+        .type-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .type-btn {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .type-btn.active.expense {
+            border-color: #ef4444;
+            background: #fef2f2;
+            color: #ef4444;
+        }
+
+        .type-btn.active.income {
+            border-color: #3b82f6;
+            background: #eff6ff;
+            color: #3b82f6;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .cancel-btn {
+            background: #f5f5f5;
+            color: #666;
+        }
+
+        .save-btn {
+            background: linear-gradient(135deg, #D4A574, #C89660);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="status-bar">
+                <span>7:00 ✈️</span>
+                <div class="logo">CW MONEY</div>
+                <span>📶 📶 €35</span>
+            </div>
+        </div>
+
+        <!-- Sleep Reminder -->
+        <div class="sleep-reminder">
+            <div class="moon-icon"></div>
+            <span>睡前記帳打卡賺點</span>
+        </div>
+
+        <!-- Calendar Header -->
+        <div class="calendar-header">
+            <div class="month-year">
+                <span>2025年10月</span>
+                <div class="calendar-icon"></div>
+            </div>
+        </div>
+
+        <!-- Calendar -->
+        <div class="calendar">
+            <div class="weekdays">
+                <div class="weekday">週一</div>
+                <div class="weekday">週二</div>
+                <div class="weekday">週三</div>
+                <div class="weekday">週四</div>
+                <div class="weekday">週五</div>
+                <div class="weekday">週六</div>
+                <div class="weekday">週日</div>
+            </div>
+            <div class="dates" id="calendar-dates">
+                <!-- Calendar dates will be generated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Statistics -->
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-label">本月收入</div>
+                <div class="stat-value income" id="monthly-income">$43,853</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">本月支出</div>
+                <div class="stat-value expense" id="monthly-expense">$8,906</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">本月可用(預算)</div>
+                <div class="stat-value budget" id="monthly-budget">$1,094</div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button class="action-btn record-btn" onclick="openRecordModal()">
+                <div class="coin-icon">$</div>
+                記一筆
+            </button>
+            <button class="action-btn account-btn">
+                <div class="calendar-icon"></div>
+                帳戶
+            </button>
+        </div>
+
+        <!-- Summary Cards -->
+        <div class="summary-cards">
+            <div class="summary-card">
+                <div class="summary-left">
+                    <div class="summary-title">本日</div>
+                    <div class="summary-date" id="today-date">2025/10/25</div>
+                </div>
+                <div class="summary-amounts">
+                    <div class="summary-expense" id="today-expense">-$0</div>
+                    <div class="summary-income" id="today-income">+$0</div>
+                </div>
+            </div>
+
+            <div class="summary-card">
+                <div class="summary-left">
+                    <div class="summary-title">本週</div>
+                    <div class="summary-date">2025/10/20 ~ 2025/10/26</div>
+                </div>
+                <div class="summary-amounts">
+                    <div class="summary-expense" id="week-expense">-$886</div>
+                    <div class="summary-income" id="week-income">+$11,000</div>
+                </div>
+            </div>
+
+            <div class="summary-card">
+                <div class="summary-left">
+                    <div class="summary-title">本月</div>
+                    <div class="summary-date">2025/10/01 ~ 2025/10/31</div>
+                </div>
+                <div class="summary-amounts">
+                    <div class="summary-expense" id="month-expense">-$8,906</div>
+                    <div class="summary-income" id="month-income">+$43,853</div>
+                </div>
+            </div>
+
+            <div class="summary-card">
+                <div class="summary-left">
+                    <div class="summary-title">本年</div>
+                    <div class="summary-date">2025/01/01 ~ 2025/12/31</div>
+                </div>
+                <div class="summary-amounts">
+                    <div class="summary-expense" id="year-expense">-$247,927</div>
+                    <div class="summary-income" id="year-income">+$257,806</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="#" class="nav-item">
+                <div class="nav-icon"></div>
+                更多
+            </a>
+            <a href="#" class="nav-item">
+                <div class="nav-icon"></div>
+                首頁
+            </a>
+            <a href="#" class="nav-item">
+                <div class="nav-icon"></div>
+                發票
+            </a>
+            <a href="#" class="nav-item">
+                <div class="nav-icon"></div>
+                文章
+            </a>
+            <a href="#" class="nav-item">
+                <div class="nav-icon"></div>
+                報表
+            </a>
+        </div>
+
+        <!-- Home Indicator -->
+        <div class="home-indicator"></div>
+    </div>
+
+    <!-- Record Modal -->
+    <div class="modal" id="recordModal">
+        <div class="modal-content">
+            <div class="modal-header">記一筆</div>
+            
+            <div class="type-buttons">
+                <button class="type-btn expense active" onclick="setRecordType('expense')">支出</button>
+                <button class="type-btn income" onclick="setRecordType('income')">收入</button>
+            </div>
+
+            <form id="recordForm">
+                <div class="form-group">
+                    <label class="form-label">金額</label>
+                    <input type="number" class="form-input" id="amount" placeholder="輸入金額" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">分類</label>
+                    <select class="form-select" id="category" required>
+                        <option value="">選擇分類</option>
+                        <option value="food">餐飲</option>
+                        <option value="transport">交通</option>
+                        <option value="shopping">購物</option>
+                        <option value="entertainment">娛樂</option>
+                        <option value="bills">帳單</option>
+                        <option value="salary">薪資</option>
+                        <option value="bonus">獎金</option>
+                        <option value="investment">投資</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">備註</label>
+                    <input type="text" class="form-input" id="note" placeholder="輸入備註（可選）">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">日期</label>
+                    <input type="date" class="form-input" id="date" required>
+                </div>
+
+                <div class="modal-buttons">
+                    <button type="button" class="modal-btn cancel-btn" onclick="closeRecordModal()">取消</button>
+                    <button type="submit" class="modal-btn save-btn">儲存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let currentRecordType = 'expense';
+        let records = JSON.parse(localStorage.getItem('accountingRecords')) || [];
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            generateCalendar();
+            updateStatistics();
+            setTodayDate();
+        });
+
+        // Generate calendar
+        function generateCalendar() {
+            const calendarDates = document.getElementById('calendar-dates');
+            const currentDate = new Date();
+            const currentMonth = currentDate.getMonth();
+            const currentYear = currentDate.getFullYear();
+            
+            // Get first day of month and number of days
+            const firstDay = new Date(currentYear, currentMonth, 1);
+            const lastDay = new Date(currentYear, currentMonth + 1, 0);
+            const daysInMonth = lastDay.getDate();
+            const startingDayOfWeek = (firstDay.getDay() + 6) % 7; // Adjust for Monday start
+
+            calendarDates.innerHTML = '';
+
+            // Add empty cells for days before month starts
+            for (let i = 0; i < startingDayOfWeek; i++) {
+                const emptyDate = document.createElement('div');
+                emptyDate.className = 'date';
+                calendarDates.appendChild(emptyDate);
+            }
+
+            // Add days of month
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dateElement = document.createElement('div');
+                dateElement.className = 'date';
+                dateElement.textContent = day;
+                
+                // Highlight today
+                if (day === currentDate.getDate()) {
+                    dateElement.classList.add('today');
+                }
+
+                // Check if there are records for this date
+                const dateString = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                if (hasRecordsForDate(dateString)) {
+                    dateElement.classList.add('has-record');
+                }
+
+                calendarDates.appendChild(dateElement);
+            }
+        }
+
+        // Check if there are records for a specific date
+        function hasRecordsForDate(dateString) {
+            return records.some(record => record.date === dateString);
+        }
+
+        // Set today's date
+        function setTodayDate() {
+            const today = new Date();
+            const dateString = `${today.getFullYear()}/${String(today.getMonth() + 1).padStart(2, '0')}/${String(today.getDate()).padStart(2, '0')}`;
+            document.getElementById('today-date').textContent = dateString;
+            document.getElementById('date').value = today.toISOString().split('T')[0];
+        }
+
+        // Update statistics
+        function updateStatistics() {
+            const currentDate = new Date();
+            const currentMonth = currentDate.getMonth();
+            const currentYear = currentDate.getFullYear();
+
+            // Calculate totals
+            const totals = {
+                today: { income: 0, expense: 0 },
+                week: { income: 0, expense: 0 },
+                month: { income: 0, expense: 0 },
+                year: { income: 0, expense: 0 }
+            };
+
+            records.forEach(record => {
+                const recordDate = new Date(record.date);
+                const amount = parseFloat(record.amount);
+
+                // Today
+                if (recordDate.toDateString() === currentDate.toDateString()) {
+                    totals.today[record.type] += amount;
+                }
+
+                // This week
+                const weekStart = new Date(currentDate);
+                weekStart.setDate(currentDate.getDate() - currentDate.getDay() + 1);
+                if (recordDate >= weekStart && recordDate <= currentDate) {
+                    totals.week[record.type] += amount;
+                }
+
+                // This month
+                if (recordDate.getMonth() === currentMonth && recordDate.getFullYear() === currentYear) {
+                    totals.month[record.type] += amount;
+                }
+
+                // This year
+                if (recordDate.getFullYear() === currentYear) {
+                    totals.year[record.type] += amount;
+                }
+            });
+
+            // Update UI
+            document.getElementById('today-income').textContent = `+$${totals.today.income.toLocaleString()}`;
+            document.getElementById('today-expense').textContent = `-$${totals.today.expense.toLocaleString()}`;
+            
+            document.getElementById('week-income').textContent = `+$${totals.week.income.toLocaleString()}`;
+            document.getElementById('week-expense').textContent = `-$${totals.week.expense.toLocaleString()}`;
+            
+            document.getElementById('month-income').textContent = `+$${totals.month.income.toLocaleString()}`;
+            document.getElementById('month-expense').textContent = `-$${totals.month.expense.toLocaleString()}`;
+            document.getElementById('monthly-income').textContent = `$${totals.month.income.toLocaleString()}`;
+            document.getElementById('monthly-expense').textContent = `$${totals.month.expense.toLocaleString()}`;
+            
+            document.getElementById('year-income').textContent = `+$${totals.year.income.toLocaleString()}`;
+            document.getElementById('year-expense').textContent = `-$${totals.year.expense.toLocaleString()}`;
+
+            // Calculate budget (income - expense for current month)
+            const budget = totals.month.income - totals.month.expense;
+            document.getElementById('monthly-budget').textContent = `$${budget.toLocaleString()}`;
+        }
+
+        // Modal functions
+        function openRecordModal() {
+            document.getElementById('recordModal').style.display = 'block';
+        }
+
+        function closeRecordModal() {
+            document.getElementById('recordModal').style.display = 'none';
+            document.getElementById('recordForm').reset();
+            setTodayDate();
+        }
+
+        function setRecordType(type) {
+            currentRecordType = type;
+            const expenseBtn = document.querySelector('.type-btn.expense');
+            const incomeBtn = document.querySelector('.type-btn.income');
+            
+            expenseBtn.classList.remove('active');
+            incomeBtn.classList.remove('active');
+            
+            if (type === 'expense') {
+                expenseBtn.classList.add('active');
+            } else {
+                incomeBtn.classList.add('active');
+            }
+
+            // Update category options based on type
+            updateCategoryOptions(type);
+        }
+
+        function updateCategoryOptions(type) {
+            const categorySelect = document.getElementById('category');
+            categorySelect.innerHTML = '<option value="">選擇分類</option>';
+
+            if (type === 'expense') {
+                const expenseCategories = [
+                    { value: 'food', text: '餐飲' },
+                    { value: 'transport', text: '交通' },
+                    { value: 'shopping', text: '購物' },
+                    { value: 'entertainment', text: '娛樂' },
+                    { value: 'bills', text: '帳單' },
+                    { value: 'medical', text: '醫療' },
+                    { value: 'education', text: '教育' },
+                    { value: 'other', text: '其他' }
+                ];
+                expenseCategories.forEach(cat => {
+                    const option = document.createElement('option');
+                    option.value = cat.value;
+                    option.textContent = cat.text;
+                    categorySelect.appendChild(option);
+                });
+            } else {
+                const incomeCategories = [
+                    { value: 'salary', text: '薪資' },
+                    { value: 'bonus', text: '獎金' },
+                    { value: 'investment', text: '投資' },
+                    { value: 'freelance', text: '兼職' },
+                    { value: 'gift', text: '禮金' },
+                    { value: 'other', text: '其他' }
+                ];
+                incomeCategories.forEach(cat => {
+                    const option = document.createElement('option');
+                    option.value = cat.value;
+                    option.textContent = cat.text;
+                    categorySelect.appendChild(option);
+                });
+            }
+        }
+
+        // Handle form submission
+        document.getElementById('recordForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const amount = parseFloat(document.getElementById('amount').value);
+            const category = document.getElementById('category').value;
+            const note = document.getElementById('note').value;
+            const date = document.getElementById('date').value;
+
+            if (!amount || !category || !date) {
+                alert('請填寫所有必填欄位');
+                return;
+            }
+
+            // Create new record
+            const newRecord = {
+                id: Date.now(),
+                type: currentRecordType,
+                amount: amount,
+                category: category,
+                note: note,
+                date: date,
+                timestamp: new Date().toISOString()
+            };
+
+            // Add to records array
+            records.push(newRecord);
+            
+            // Save to localStorage
+            localStorage.setItem('accountingRecords', JSON.stringify(records));
+
+            // Update UI
+            updateStatistics();
+            generateCalendar();
+            
+            // Close modal
+            closeRecordModal();
+            
+            alert('記帳成功！');
+        });
+
+        // Close modal when clicking outside
+        document.getElementById('recordModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeRecordModal();
+            }
+        });
+
+        // Initialize category options
+        updateCategoryOptions('expense');
+    </script>
+</body>
+</html>
